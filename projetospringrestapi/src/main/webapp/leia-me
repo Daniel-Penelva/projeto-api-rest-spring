@@ -1,0 +1,226 @@
+   Evolução dos Serviços
+
+                                 [REST]
+                          A era da arquitetura REST 
+                       A implementações do REST são o RestFull
+                       Microserviços com responsabilidades definidas
+
+                              ^                       ^
+                              |                       |
+                              |         [SOA]         |
+                       Arquitetura Orientado a Serviços (SOA)
+                          Comunicação em XML usando SOAP
+                              (Extremamente Complexo)
+                         
+                              ^                       ^
+                              |                       |
+                              |                       |
+                       Sistemas que trocavam informações tinham a 
+                 mesma rotina escrita várias vezes por equipes diferentes 
+                          (Bagunça na troca de informações)
+
+
+
+REST (Representational State Transfer) é um estilo arquitetural usado para projetar sistemas de software distribuídos, especialmente aqueles que envolvem a 
+comunicação entre sistemas na web. 
+
+
+No estilo REST, os recursos são expostos através de URLs (Uniform Resource Locators) e são acessados por meio de operações HTTP, como GET, POST, PUT e DELETE. 
+Cada recurso é identificado de forma única por sua URL e pode representar uma entidade de negócio, como um usuário, um produto ou uma postagem em um blog.
+
+Os princípios básicos do REST incluem:
+
+ -> Protocolo HTTP: O REST utiliza o protocolo HTTP como sua base de comunicação. Isso significa que ele aproveita os métodos e códigos de status HTTP, como GET para 
+    recuperar um recurso, POST para criar um recurso, PUT para atualizar um recurso e DELETE para remover um recurso.
+    Get - Anotação Spring @GetMapping - Pedido para recuperar dados.
+
+ -> Stateless: As solicitações enviadas para um serviço REST devem conter todas as informações necessárias para processá-las. O servidor não deve manter nenhum estado 
+    sobre o cliente entre as solicitações, ou seja, não pode ter sessões amarradas. Cada solicitação é tratada de forma independente.
+    
+    Exemplificando: Diagmos que você é um usuário e se logou e foi feito uma autenticação (login e senha), porém nessa parte em API RestFull entra a  
+                    autenticação por tokken (código criptografado) que fica colocado no lado do navegador do usuário e toda vez que o usuário for fazer uma 
+                    requisição, por exemplo, salvar um produto, esse tokken (código de validação) que é tipo uma autorização do usuário que tem que ser mandada para 
+                    a API o tokken e os produtos salvos do usuário que você quer gravar no BD, então esse processo vai ser feito, ou seja, gravado os dados e gerando
+                    a resposta ao usuário que foi salvo o produto com sucesso. Portanto, as sessões não podem ser amarradas, o cliente já tem que ter todos os dados
+                    em mãos (na requisição), como o login, a senha, o tokken de validação e os dados para salvar, lembrando, que esses dados virá pela requisição, 
+                    logo, o servidor não poderá está dependendo do cliente, esperando-o para autorizá-lo para tais ações.
+
+ -> Operações CRUD: O REST mapeia as operações CRUD (Create, Read, Update, Delete) para os métodos HTTP correspondentes. Por exemplo, o POST é usado para criar um novo
+    recurso, o GET é usado para ler um recurso, o PUT é usado para atualizar um recurso existente e o DELETE é usado para remover um recurso.
+    
+    POST - Anotação Spring @PostMapping - Enviar dados para processar
+    PUT - Anotação Spring @PutMapping - Enviar dados para atualizar
+    DELETE - Anotação Spring @DeleteMapping - Deletar o registro
+
+ -> Representações: Os recursos em um serviço REST podem ser representados em diferentes formatos, como XML, JSON ou HTML. O cliente pode especificar o formato desejado 
+    usando os cabeçalhos HTTP apropriados.
+
+ -> URIs como identificadores de recursos: Cada recurso em um serviço REST é identificado por uma URL única. As URLs são usadas para acessar e manipular os recursos 
+    através das operações HTTP.
+
+
+RESTFull é um termo usado para descrever um serviço web que segue os princípios do estilo arquitetural REST. Um serviço RESTful é aquele que adere às diretrizes e 
+boas práticas do REST, fornecendo uma interface consistente e previsível para interações entre sistemas.
+
+[EndPoinnts]
+Endpoints são os pontos de extremidade de um serviço web ou API (Interface de Programação de Aplicativos). Eles são as URLs (Uniform Resource Locators) específicas 
+usadas para acessar recursos ou executar operações em um serviço web.
+
+Em um serviço web, os endpoints são definidos para cada recurso disponível, indicando a localização e os métodos HTTP permitidos para interagir com esse recurso. 
+Cada endpoint geralmente corresponde a uma operação específica que pode ser realizada no serviço.
+
+Por exemplo, considere uma API de um sistema de gerenciamento de usuários. Alguns exemplos de endpoints seriam:
+
+ ->  `/users`: Endpoint para listar todos os usuários registrados. Neste caso, provavelmente o método HTTP utilizado seria o GET.
+
+ ->  `/users/{id}`: Endpoint para obter informações sobre um usuário específico. O parâmetro `{id}` indica que o endpoint espera o ID do usuário como parte da URL. 
+     O método HTTP utilizado aqui também seria o GET.
+
+ -> `/users/{id}`: Endpoint para atualizar as informações de um usuário específico. O método HTTP utilizado seria o PUT ou o PATCH.
+
+ -> `/users/{id}`: Endpoint para excluir um usuário específico. O método HTTP utilizado seria o DELETE.
+
+Cada endpoint é uma rota específica dentro da API que determina a ação a ser executada e os recursos envolvidos. Os endpoints são acessados através de uma combinação 
+da URL base do serviço e da rota específica definida para cada recurso.
+
+Ao projetar uma API, os endpoints devem ser bem definidos e seguir as convenções estabelecidas para garantir uma interface clara e consistente para os clientes que 
+desejam interagir com o serviço web.
+
+Exemplificando: Tem o sistema de mercado e você quer disponibilizar em uma arquitetura de API, logo você terá que reescrever as regras de negócio da usa linguagem 
+de programação e que dê suporte a web. Você vai criar o seu projeto em forma de API, colocar num servidor de hospedagem e integrar o Banco de Dados e fazer as suas 
+interfaces (tela) para o usuário acessar. O usuário só vai fazer as requisições para acessar as informações do servidor e retornando para o usuário.
+
+                                 < Integração de vários projetos em uma API >
+
+  --------------------------    Requisições (endpoints)
+  | [ Servidor Hospedagem ] |  <------------------------ [ sistema web ]
+  |         +               |  <------------------------ [ sistema desktop ]    <----------------->[ Usuário ]
+  |    [ Banco de Dados ]   |  <------------------------ [ aplicativo mobile ]
+  |-------------------------|
+     Projeto em API
+      WebServices
+   
+
+                       < Sistema em Arquitetura em REST / RestFull >
+
+
+           [ Front End ]                                           [ Back End ]
+               JQuery        Pedido feito para o servidor             Java
+               PrimeUI    -------------------------------------->     PHP
+               Angular                                                C#
+               VueJS                Ajax + JSON                       Ruby
+               React         Retorno de dados em JSON                 Python
+               Outros    <---------------------------------------     Go
+                                                                      Outros
+
+OBS. Só o JSON é a resposta do pedido de processamento do servidor. Não retorna mais numa página com dados, agora é retornado somente o JSON.
+     Ou seja, é pedido e resposta em ajax e JSON, com isso, não deixa a arquitetura amarrada, contudo é possível construir a nossa estrutura 
+     com back-end em qualquer uma das liguagens dita acima e do outro lado, no front-end, também qualquer uma das linguagens dita acima. Outro,
+     detalhe é que é possível trocar a tecnologia tanto do front-end quanto do back-end sem que sofra problemas de compatibilidade. É possível 
+     também reutilizar tanto o front-end quanto o back-end para conectar com vários front-end ou vários back-end.
+ 
+Benefícios: 
+    -> Reutilização de Códigos;
+    -> Acessível por qualquer tecnologia;
+    -> Baixo consumo do servidor, ou seja, (1) faz a requisição (2) o ajax processo (3) devolve a requisição (4) Finish;
+    -> Fácil Manutenção;
+    -> Fácil implementação de recursos;
+    -> Front-End desamarrado com o back-end, ou seja, é possível trocar a tecnologia do front-end sem que sofra alterações no back-end;
+        OBS. Por exemplo, o MVC é uma arquitetura amarrada, pois precisa dessa integração entre o front-end e back-end, ou seja, em MVC 
+             tem que retornar uma página junto com os dados.
+    -> Back-End desamarrado com o front-end, ou seja, é possível trocar a tecnologia do back-end sem que sofra alterações no front-end;
+    -> Alta escalabilidade;
+    -> Outros.
+
+                                                     < Modelagem Correta de URIs >
+
+OBS. URI - É como será acessado os nossos métodos RestFull.
+
+OBS. As requisições abaixos serão acessadas por um navegador pelo um framework em javascript. Serão passados um paramêtro (verbo) HTTP e a URI que 
+     definirá a ação.
+
+
+
+            [ URI criada de forma ERRADA ]                                          [ URI criada de forma CERTA ]
+   
+                     RPC (POX)                                                                   REST
+-----------------------------------------------------                   -----------------------------------------------------
+| Verbo HTTP  |       URI           |      Ação      |                  | Verbo HTTP  |       URI           |      Ação      |
+-----------------------------------------------------                    -----------------------------------------------------
+|    GET      | /buscarCliente/1    |   Visualizar   |                  |    GET      |      /cliente/1     |   Visualizar   |
+-----------------------------------------------------                    -----------------------------------------------------
+|   POST      | /salvarCliente/1    |   Criar        |                  |   POST      |      /cliente       |   Criar        |
+-----------------------------------------------------                    -----------------------------------------------------
+|   POST      | /alterarCliente/1    |   Alterar     |                  |   PUT       |      /cliente/1     |   Alterar     |
+-----------------------------------------------------                    -----------------------------------------------------
+| GET/POST    | /deletarCliente/1    |   Remover     |                  |   DELETE    |       /cliente/1    |   Remover     |
+-----------------------------------------------------                    -----------------------------------------------------
+
+OBS. A implementação feita de forma errada pode gerar 
+     quebra do sistema, de padrões, sem falar que também
+     não pode expor a sua URI para possíveis invasores mal
+     intencionados.
+
+         @RestController
+         @RestMapping("/cliente")
+         public class PessoaController{
+              
+                @GetMapping("/{cpf}")
+                public ResponseEntity<Pessoa> buscarPessoa(@PathVariable("cpf") String cpf){
+                
+                       System.out.println("Aqui processa a consulta no banco de dados");
+
+                       return new ResponseEntity<Pessoa>(new Pessoa(), HttpStatus.OK);
+                }
+        }
+
+
+                                      < Regras da API RestFull >
+
+ 1. Tem que existir os dois papéis, o cliente (Navegador - front-end) e o servidor (API - back-end).
+ 
+ 2. Stateless, o sistema não pode ter sessões amarradas/ criadas para o cliente e as requisições tem que todos os dados 
+    para o processo ser realizado e a resposta ser completa.
+
+ 3. Precisa permitir que o cache seja feito caso necessário.
+
+ 4. Interface uniforme - a API não pode fazer distinção de clientes, não pode diferenciar e processar algo diferente para 
+    o navegador, desktop ou mobile. Ou seja, a API não pode saber qual é o tipo de cliente, se ele é um navegador, ou um desktop
+    ou um mobile.
+
+ 5. Sistemas em camadas, entre o cliente e a API deves ser possível adicionar algum serviço como log da aplicação.
+
+ 6. Código sobre demanda, por exemplo, o javascript importado direto do servidor da API.
+
+-------------------------------------------------//------------------------------------------------------------
+
+Mapeamentos:
+
+ 1. @EntityScan(basePackages = {"projeto.api.rest.model"})
+    Vai ler todas as classes que estiverem nesse pacote de modelo para criar automaticamente no banco de dados.
+    
+ 2. @ComponentScan(basePackages = {"projeto.*"})
+    Para injeção de dependencia para o Spring controlar todos os nossos objetos. Vai entrar em todas as pastas 
+    denominado 'projeto' e vai sair varrendo configurando todo o nosso projeto automaticamente em relação a 
+    injeção de dependencia.
+    
+ 3. @EnableJpaRepositories(basePackages = {"projeto.api.rest.repository"})
+   Habilitar a parte de repositório para as funcionalidades do CRUD 
+    
+ 4. @EnableTransactionManagement
+   Corresponde no controle das transações no banco de dados, transaçoes na hora de inserir, deletar, ...
+   São as gerencias de transações.
+   
+ 5. @EnableWebMvc
+   Caso eu queira trabalhar com a estrutura MVC - ativa a parte de MVC.
+   
+ 6. @RestController
+   Para saber que é um projeto Rest e que é para retornar JSON nas requisições.
+   
+ 7. @EnableAutoConfiguration
+    Para ativar todas essas configurações de mapeamento e manter tudo funcionando.
+ 
+    
+ Todas essas anotações é o suficiente para manter o funcionamento de projetos Rest Spring Boot.
+
+

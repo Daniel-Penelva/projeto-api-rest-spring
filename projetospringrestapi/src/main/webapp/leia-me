@@ -222,5 +222,20 @@ Mapeamentos:
  
     
  Todas essas anotações é o suficiente para manter o funcionamento de projetos Rest Spring Boot.
+ 
+ --------------------------------------------- // -----------------------------------------------------------
+
+Tem que aplicar essas propriedades no application.properties para corrigir esse erro: 
+java.sql.SQLFeatureNotSupportedException - é um erro que não prejudica a aplicação, no caso, é um 
+erro de conexão de JDBC. Portanto, para resolver basta adicionar as duas propriedades abaixo.
+
+propriedades:
+
+spring.jpa.properties.hibernate.temp.use_jdbc_metadata_defaults = false
+spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.PostgreSQLDialect
+
+IMPORTANTE!!!
+Link da documentação do application.properties:
+https://docs.spring.io/spring-boot/docs/current/reference/html/application-properties.html
 
 

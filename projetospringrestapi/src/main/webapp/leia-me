@@ -239,3 +239,19 @@ Link da documentação do application.properties:
 https://docs.spring.io/spring-boot/docs/current/reference/html/application-properties.html
 
 
+-------------------------------------------- // -------------------------------------------------------------
+
+Vale ressaltar que vamos utilizar as bibliotecas javax para as funcionalidades do JPA. Porém ao criar o projeto por
+padrão são adicionados as bibliotecas do jakarta. Logo, para fazer essa remorção do jakarta temos que mudar a versão
+do Spring na tag parent para 2.1.2.RELEASE no arquivo pom.xml, dessa forma o javax será provido em seu projeto sem ser 
+necessário adicionar nenhuma dependência extra! 
+Exemplificando - lá no pom.xml
+
+<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>2.1.1.RELEASE</version>
+		<relativePath /> <!-- lookup parent from repository -->
+</parent>
+
+Outro Detalhe: Modifiquei para java 1.8. 

@@ -293,4 +293,4 @@ Podemos utilizar o 'defaultValue' para caso onde o cliente esquece de preencher 
 o serviço irá pegar esse valor default, podendo retornar como resultado para o cliente dando-lhe um aviso para ele.
 
 Podemos utilizar o 'required' como 'false' que torna não obrigatorio o valor a ser passado por parametro. Logo, como o parametro não é
-obrigatório, ele assume o valor de null. 
+obrigatório, ele assume o valor de null. Lembrando que para o valor 'true' torna obrigatorio o valor do parametro a ser passado.

@@ -14,10 +14,11 @@ public class IndexController {
 
 	/* Serviço RestFull */
 	@GetMapping(value = "/", produces = "application/json")
-	public ResponseEntity init(@RequestParam(value = "nome", required = true, defaultValue = "com nome não informado") String nome) {
+	public ResponseEntity init(@RequestParam(value = "nome", required = true, defaultValue = "com nome não informado") String nome, 
+			@RequestParam(value = "salario", required = true, defaultValue = "Salário não informado") Long salario) {
 		
 		System.out.println("Parâmetro sendo recebido " + nome);
-		return new ResponseEntity("Olá usuário " + nome + " - Bem vindo ao Rest Spring Boot!", HttpStatus.OK);
+		return new ResponseEntity("Olá usuário " + nome + " - Salário: " +  salario + " - Bem vindo ao Rest Spring Boot!", HttpStatus.OK);
 	}
 
 }

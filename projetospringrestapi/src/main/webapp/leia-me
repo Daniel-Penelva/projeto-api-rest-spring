@@ -294,3 +294,5 @@ o serviço irá pegar esse valor default, podendo retornar como resultado para o
 
 Podemos utilizar o 'required' como 'false' que torna não obrigatorio o valor a ser passado por parametro. Logo, como o parametro não é
 obrigatório, ele assume o valor de null. Lembrando que para o valor 'true' torna obrigatorio o valor do parametro a ser passado.
+
+Passando o parametro da aplicação como exemplo: http://localhost:8080/usuario/?nome=Daniel&salario=5000

@@ -291,3 +291,6 @@ Passando o parametro da aplicação como exemplo: http://localhost:8080/usuario/
 
 Podemos utilizar o 'defaultValue' para caso onde o cliente esquece de preencher o valor, logo se o cliente esquece de informar o valor,
 o serviço irá pegar esse valor default, podendo retornar como resultado para o cliente dando-lhe um aviso para ele.
+
+Podemos utilizar o 'required' como 'false' que torna não obrigatorio o valor a ser passado por parametro. Logo, como o parametro não é
+obrigatório, ele assume o valor de null. 

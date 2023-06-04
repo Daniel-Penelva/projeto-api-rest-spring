@@ -259,3 +259,30 @@ Exemplificando - lá no pom.xml
 </parent>
 
 Outro Detalhe: Modifiquei para java 1.8. 
+
+---------------------------------------------- // ---------------------------------------------------------------
+Exemplificando a codificação: 
+
+1. `@RestController`: É uma anotação usada no Spring Boot para indicar que essa classe é um controlador REST, responsável por lidar com as 
+    solicitações HTTP e retornar as respostas adequadas.
+
+2. `@RequestMapping(value = "/usuario")`: É uma anotação que especifica o caminho base para todas as solicitações HTTP manipuladas por esse 
+    controlador. Nesse caso, todas as solicitações começando com "/usuario" serão tratadas por este controlador.
+
+3. `public class IndexController`: É a definição da classe do controlador.
+
+4. `@GetMapping(value = "/", produces = "application/json")`: É uma anotação que especifica que esse método será acionado por uma solicitação GET HTTP 
+    para a rota especificada. Neste caso, o método `init` será acionado quando a solicitação for enviada para "/usuario/".
+
+5. `public ResponseEntity init(@RequestParam(value = "nome") String nome)`: É a definição do método `init`, que recebe um parâmetro chamado "nome" através 
+    de uma solicitação GET. O valor desse parâmetro é armazenado na variável `nome` do tipo `String`. O retorno do método é uma instância de `ResponseEntity`, 
+    que é uma classe que representa uma resposta HTTP personalizada.
+
+6. `System.out.println("Parâmetro sendo recebido " + nome);`: Essa linha imprime no console uma mensagem contendo o valor do parâmetro "nome" recebido na 
+    solicitação GET.
+
+7. `return new ResponseEntity("Olá usuário Rest Spring Boot, seu nome é " + nome, HttpStatus.OK);`: Retorna uma nova instância de `ResponseEntity` com uma 
+    mensagem de saudação personalizada, que inclui o valor do parâmetro "nome" recebido. O status HTTP retornado é "OK" (código 200).
+
+Em resumo, esse script define um controlador REST que recebe uma solicitação GET em "/usuario/" com um parâmetro "nome" e retorna uma resposta HTTP com uma 
+mensagem de saudação personalizada. O valor do parâmetro "nome" é exibido no console antes de retornar a resposta.

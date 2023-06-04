@@ -286,3 +286,8 @@ Exemplificando a codificação:
 
 Em resumo, esse script define um controlador REST que recebe uma solicitação GET em "/usuario/" com um parâmetro "nome" e retorna uma resposta HTTP com uma 
 mensagem de saudação personalizada. O valor do parâmetro "nome" é exibido no console antes de retornar a resposta.
+
+Passando o parametro da aplicação como exemplo: http://localhost:8080/usuario/?nome=Daniel
+
+Podemos utilizar o 'defaultValue' para caso onde o cliente esquece de preencher o valor, logo se o cliente esquece de informar o valor,
+o serviço irá pegar esse valor default, podendo retornar como resultado para o cliente dando-lhe um aviso para ele.

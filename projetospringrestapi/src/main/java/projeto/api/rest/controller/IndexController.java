@@ -11,14 +11,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping(value = "/usuario")
 public class IndexController {
-	
+
 	/* Serviço RestFull */
 	@GetMapping(value = "/", produces = "application/json")
-	public ResponseEntity init(@RequestParam(value = "nome") String nome) {
+	public ResponseEntity init(@RequestParam(value = "nome", defaultValue = "com nome não informado!") String nome) {
 		
 		System.out.println("Parâmetro sendo recebido " + nome);
-		
-		return new ResponseEntity("Olá usuário Rest Spring Boot,seu nome é " + nome, HttpStatus.OK);
+		return new ResponseEntity("Olá usuário " + nome + " - Bem vindo ao Rest Spring Boot!", HttpStatus.OK);
 	}
 
 }

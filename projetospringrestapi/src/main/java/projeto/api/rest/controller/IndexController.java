@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import projeto.api.rest.model.Usuario;
+
 /* Arquitetura RestFull */
 @RestController
 @RequestMapping(value = "/usuario")
@@ -14,11 +16,15 @@ public class IndexController {
 
 	/* Serviço RestFull */
 	@GetMapping(value = "/", produces = "application/json")
-	public ResponseEntity init(@RequestParam(value = "nome", required = true, defaultValue = "com nome não informado") String nome, 
-			@RequestParam(value = "salario", required = true, defaultValue = "Salário não informado") Long salario) {
+	public ResponseEntity init() {
 		
-		System.out.println("Parâmetro sendo recebido " + nome);
-		return new ResponseEntity("Olá usuário " + nome + " - Salário: " +  salario + " - Bem vindo ao Rest Spring Boot!", HttpStatus.OK);
+		Usuario usuario = new Usuario();
+		usuario.setId(1L);
+		usuario.setLogin("d4n.andrade@gmail.com");
+		usuario.setSenha("123");
+		usuario.setNome("Daniel");
+			
+		return ResponseEntity.ok(usuario);  // http://localhost:8080/usuario/ 
 	}
 
 }

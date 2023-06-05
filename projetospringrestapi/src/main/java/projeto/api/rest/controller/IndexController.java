@@ -30,7 +30,17 @@ public class IndexController {
 
 		Optional<Usuario> usuario = usuarioRepository.findById(id);
 
-		return new ResponseEntity(usuario.get(), HttpStatus.OK);
+		return new ResponseEntity<Usuario>(usuario.get(), HttpStatus.OK); // http://localhost:8080/usuario/1
+	}
+	
+	
+	// Consultar lista de usuários
+	@GetMapping(value = "/", produces = "application/json")
+	public ResponseEntity<List<Usuario>> listaUsuario(){
+		
+		List<Usuario> listUsu = (List<Usuario>) usuarioRepository.findAll();
+		
+		return new ResponseEntity<List<Usuario>>(listUsu, HttpStatus.OK); // http://localhost:8080/usuario/
 	}
 
 }

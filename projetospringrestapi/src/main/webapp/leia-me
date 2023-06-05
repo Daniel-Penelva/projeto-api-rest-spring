@@ -296,3 +296,25 @@ Podemos utilizar o 'required' como 'false' que torna não obrigatorio o valor a 
 obrigatório, ele assume o valor de null. Lembrando que para o valor 'true' torna obrigatorio o valor do parametro a ser passado.
 
 Passando o parametro da aplicação como exemplo: http://localhost:8080/usuario/?nome=Daniel&salario=5000
+
+------------------------------------------------------------------- // ------------------------------------------------------------
+
+public ResponseEntity<Usuario> init(@PathVariable(value = "id") Long id): Esse é o método init, que recebe um parâmetro id através 
+de uma variável de caminho (path variable) usando a anotação @PathVariable. A anotação @PathVariable indica que o valor do id será 
+extraído do caminho da URL. O tipo do parâmetro é Long. O retorno do método é uma instância de ResponseEntity que encapsula um 
+objeto do tipo Usuario.
+
+Para testar vamos inserir alguns valores no banco de dados:
+INSERT INTO public.usuario(
+            id, login, nome, senha)
+    VALUES (1, 'daniel', 'Daniel', '123');
+
+INSERT INTO public.usuario(
+            id, login, nome, senha)
+VALUES (2, 'biana', 'Biana', '123');
+
+INSERT INTO public.usuario(
+            id, login, nome, senha)
+VALUES (3, 'walter', 'Walter', '123');
+
+uri: http://localhost:8080/usuario/1

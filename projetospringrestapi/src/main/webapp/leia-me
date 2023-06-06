@@ -318,3 +318,26 @@ INSERT INTO public.usuario(
 VALUES (3, 'walter', 'Walter', '123');
 
 uri: http://localhost:8080/usuario/1
+
+------------------------------------------------------------------- // ------------------------------------------------------------
+Exemplificando a codificação: 
+
+1. `@PostMapping(value = "/", produces = "application/json")`: Essa é uma anotação utilizada no Spring Boot para mapear o método 
+   `cadastrar` a uma solicitação HTTP POST. Ela especifica que o método será acionado quando uma solicitação POST for enviada para 
+    a rota "/". A opção `produces = "application/json"` indica que a resposta será em formato JSON.
+
+2. `public ResponseEntity<Usuario> cadastrar(@RequestBody Usuario usuario)`: Esse é o método `cadastrar` que recebe um objeto 
+   `Usuario` como parâmetro. A anotação `@RequestBody` indica que o objeto `Usuario` será extraído do corpo (body) da solicitação 
+    POST. O retorno do método é uma instância de `ResponseEntity` que encapsula um objeto do tipo `Usuario`.
+
+3. `Usuario usuarioSalvo = usuarioRepository.save(usuario)`: Nesta linha, o objeto `usuario` recebido como parâmetro é salvo no 
+    banco de dados usando o método `save` do objeto `usuarioRepository`. O método `save` retorna o objeto `Usuario` salvo, que é 
+    armazenado na variável `usuarioSalvo`.
+
+4. `return new ResponseEntity<Usuario>(usuarioSalvo, HttpStatus.OK)`: Aqui, é criada uma instância de `ResponseEntity`, passando o 
+   objeto `usuarioSalvo` como primeiro argumento e `HttpStatus.OK` como segundo argumento. O `HttpStatus.OK` indica que a solicitação 
+   foi bem-sucedida, com código de status HTTP 200. O objeto `usuarioSalvo` será retornado como resposta da solicitação POST.
+
+Em resumo, esse script define um método `cadastrar` que é acionado por uma solicitação HTTP POST na rota "/". O método recebe um 
+objeto `Usuario` no corpo da solicitação, salva esse objeto no banco de dados e retorna uma resposta HTTP com o objeto `Usuario` 
+salvo e o código de status HTTP 200 (OK).

@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -67,9 +68,25 @@ public class IndexController {
 	@PostMapping(value = "/{iduser}/idvenda/{idvenda}", produces = "application/json")
 	public ResponseEntity cadastrarVendaUsu(@PathVariable Long iduser, @PathVariable Long idVenda) {
 
-		//Usuario usuarioSalvo = usuarioRepository.save(usuario);
-
 		return new ResponseEntity("id user: " + iduser + " id venda: " + idVenda, HttpStatus.OK); // http://localhost:8080/usuario/5/idvenda/80
 	}
+
+	// Atualizar dados de usuário - Tem que passar o id no json do Postman
+	@PutMapping(value = "/", produces = "application/json")
+	public ResponseEntity<Usuario> atualizarUsu(@RequestBody Usuario usuario) {
+
+		// Neste caso o método save fará a função de atualizar uma vez que estamos mapeando como PutMapping
+		Usuario usuarioAtualizar = usuarioRepository.save(usuario);
+
+		return new ResponseEntity<Usuario>(usuarioAtualizar, HttpStatus.OK); // http://localhost:8080/usuario/
+	}
+
+	
+	 // Para simular como se estivesse chamando um outro método
+	 @PutMapping(value = "/{iduser}", produces = "application/json")
+	 public ResponseEntity atualizarVendaUsu(@PathVariable Long iduser) {
+
+		return new ResponseEntity("Atualização com sucesso", HttpStatus.OK); // http://localhost:8080/usuario/5/idvenda/80
+	 }
 
 }

@@ -341,3 +341,15 @@ Exemplificando a codificação:
 Em resumo, esse script define um método `cadastrar` que é acionado por uma solicitação HTTP POST na rota "/". O método recebe um 
 objeto `Usuario` no corpo da solicitação, salva esse objeto no banco de dados e retorna uma resposta HTTP com o objeto `Usuario` 
 salvo e o código de status HTTP 200 (OK).
+
+------------------------------------------------------------------- // ------------------------------------------------------------
+
+Configuração de contexto da nossa aplicação, ou seja, seria a nossa url do projeto. O contexto é configurado no application.properties.
+Propriedade:
+server.servlet.context-path=/projetospringrestapi
+
+Portanto, o nosso contexto ficou assim agora:
+http://localhost:8080/projetospringrestapi/
+http://localhost:8080/projetospringrestapi/usuario/
+
+

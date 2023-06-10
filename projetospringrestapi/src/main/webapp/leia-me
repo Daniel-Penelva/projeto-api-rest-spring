@@ -353,3 +353,58 @@ http://localhost:8080/projetospringrestapi/
 http://localhost:8080/projetospringrestapi/usuario/
 
 
+---------------------------------------------------------------------- // -------------------------------------------
+
+Vamos criar um Builder para startizar o nosso projeto automaticamente, para fazer isso vamos gerar um Jar executável 
+da Aplicação Spring Boot.
+
+1º Vamos modificar o nosso packaging de 'war' para jar. Logo vai ficar assim:
+<packaging>jar</packaging>
+
+2º Vamos copiar o caminho de endereço a partir da pasta 'target', para isso:
+   clica com o botão direito em cima da pasta target > properties > Resources > Location: Show In System Explorer (copia o caminho da pasta )
+   Por exemplo: C:\Users\d4nan\git\repository12\projetospringrestapi
+   
+3º Vamos abrir o prompt de comando: cmd
+
+4º Vamos acessar essa pasta, por exemplo:
+   cd C:\Users\d4nan\git\repository12\projetospringrestapi
+   
+5º Vamos criar a Builder para gerar o jar executável
+   Comando: mvn package
+   
+   IMPORTANTE!!! Estava dando erro por causa do arquivo de teste, para resolver esse erro vamos fazer um skip para pular
+   esse arquivo de teste.
+   Comando:  mvn clean package -DskipTests
+   
+6º Clica na pasta target ou no projeto e aperta o F5 para atualizar, vai ser criado o jar do projeto na pasta target.   
+   
+7º Vamos agora executar o jar para que ele fique executável para a aplicação Spring Boot.
+   No prompt de comando (cmd) vamos acessar agora a pasta target.
+   Comando: cd target
+   
+   Depois vamos inserir o comando do jar criado: java -jar <nome do jar criado>
+   OBS: Podemos acessar esse o jar clicando em cima 'projetospringrestapi-0.0.1-SNAPSHOT.jar' e com o botão 
+        direito do mouse vai em properties > Resources > Location: Show In System Explorer (copia o nome do jar do projeto)  
+   Comando: java -jar projetospringrestapi-0.0.1-SNAPSHOT.jar 
+   
+   Vale ressaltar se fechar o prompt de comando (cmd) vai morrer o processo.
+   
+   Para executar o processo de novo temos que:
+   Acessar o prompt de comando (cmd) e acessar a pasta target:
+   comando: cd C:\Users\d4nan\git\repository12\projetospringrestapi\target
+   executar o jar comando: java -jar projetospringrestapi-0.0.1-SNAPSHOT.jar
+   
+   Podemos também executar o processo diretamente no jar criado, porém NÃO É ACONSELHÁVEL, pois não terá o prompt 
+   para visualzar os logs, uma vez que precisamos dele para descobrir erros que podem ocasionar na nossa api quando
+   estiver implementando. Lembrando que para executar o jar criado basta ir na pasta onde ele se encontra e clicar
+   nele para ser executado. (caminho: C:\Users\d4nan\git\repository12\projetospringrestapi\target)
+   
+   Por isso o correto é acessar pelo prompt de comando e acessar a pasta target:
+   comando: cd C:\Users\d4nan\git\repository12\projetospringrestapi\target
+   executar o jar comando: java -jar projetospringrestapi-0.0.1-SNAPSHOT.jar 
+   
+   É possível acessar a sua API por outros sistemas ou pelo mobile basta utilizar o link - seria uma intranet
+   simulando um servidor:
+   http://<ipconfig>:8080/projetospringrestapi/
+

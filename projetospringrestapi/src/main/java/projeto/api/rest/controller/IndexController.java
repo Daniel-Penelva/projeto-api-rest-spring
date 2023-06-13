@@ -51,9 +51,9 @@ public class IndexController {
 	// Enviar dados de usuário
 	@PostMapping(value = "/", produces = "application/json")
 	public ResponseEntity<Usuario> cadastrar(@RequestBody Usuario usuario) {
-		
-		//Criando a referência do telefone com o usuário - vai amarrar os telefones a esse usuário
-		for (int pos=0; pos < usuario.getTelefones().size(); pos++) {
+
+		// Criando a referência do telefone com o usuário - vai amarrar os telefones a esse usuário
+		for (int pos = 0; pos < usuario.getTelefones().size(); pos++) {
 			usuario.getTelefones().get(pos).setUsuario(usuario);
 		}
 
@@ -80,43 +80,46 @@ public class IndexController {
 
 	// Atualizar dados de usuário - Tem que passar o id no json do Postman
 	@PutMapping(value = "/", produces = "application/json")
-	public ResponseEntity<Usuario> atualizarUsu(@RequestBody Usuario usuario) {
+	public ResponseEntity<Usuario> atualizar(@RequestBody Usuario usuario) {
+		
+		// Criando a referência do telefone com o usuário - vai amarrar os telefones a esse usuário
+		for (int pos = 0; pos < usuario.getTelefones().size(); pos++) {
+			usuario.getTelefones().get(pos).setUsuario(usuario);
+		}
 
-		// Neste caso o método save fará a função de atualizar uma vez que estamos mapeando como PutMapping
+		// Neste caso o método save fará a função de atualizar uma vez que estamos
+		// mapeando como PutMapping
 		Usuario usuarioAtualizar = usuarioRepository.save(usuario);
 
 		return new ResponseEntity<Usuario>(usuarioAtualizar, HttpStatus.OK); // http://localhost:8080/usuario/
 	}
 
-	
-	 // Para simular como se estivesse chamando um outro método
-	 @PutMapping(value = "/{iduser}", produces = "application/json")
-	 public ResponseEntity atualizarVendaUsu(@PathVariable Long iduser) {
-
+	// Para simular como se estivesse chamando um outro método
+	@PutMapping(value = "/{iduser}", produces = "application/json")
+	public ResponseEntity atualizarUsuId(@PathVariable Long iduser) {
+		
 		return new ResponseEntity("Atualização com sucesso", HttpStatus.OK); // http://localhost:8080/usuario/5/
-	 }
-	 
-	 
-	 // Deletar dados do usuário - Tem que passar o id no json do Postman
-	 /*
-	 
-	 @DeleteMapping(value = "/{id}", produces = "application/json")
-	 public String deletarUsu(@PathVariable("id") Long id){
-		 
-		 usuarioRepository.deleteById(id);
-		 
-		 return "Deletado com Sucesso!";
-	 }
-	 
+	}
+
+	// Deletar dados do usuário - Tem que passar o id no json do Postman
+	/*
+	 * 
+	 * @DeleteMapping(value = "/{id}", produces = "application/json") public String
+	 * deletarUsu(@PathVariable("id") Long id){
+	 * 
+	 * usuarioRepository.deleteById(id);
+	 * 
+	 * return "Deletado com Sucesso!"; }
+	 * 
 	 */
-	 
+
 	// Consultar usuário por id
 	@DeleteMapping(value = "/{id}", produces = "application/json")
 	public ResponseEntity<Usuario> deletarUsuPorId(@PathVariable(value = "id") Long id) {
 
 		usuarioRepository.deleteById(id);
 
-		return new ResponseEntity ("Usuário Deletado!", HttpStatus.OK); // http://localhost:8080/usuario/1
+		return new ResponseEntity("Usuário Deletado!", HttpStatus.OK); // http://localhost:8080/usuario/1
 	}
 
 }

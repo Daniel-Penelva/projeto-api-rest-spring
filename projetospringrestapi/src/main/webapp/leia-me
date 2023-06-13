@@ -423,3 +423,43 @@ Criando o POST no postman:
 Exemplo de delete no postman:
 http://localhost:8080/projetospringrestapi/usuario/20/
 
+Exemplo atualizar (PUT) no postman: http://localhost:8080/projetospringrestapi/usuario/
+
+Alterando apenas os dados do usuário:
+{
+    "id": 35,
+    "login": "vanessa",
+    "senha": "123",
+    "nome": "Vanessa",
+    "telefones": [
+        {
+            "id": 36,
+            "numero": "(21) 9005-9677"
+        }
+    ]
+}
+
+
+Alterando add um novo telefone:
+
+{
+    "id": 37,
+    "login": "bolsonaro",
+    "senha": "123",
+    "nome": "Bolsonaro",
+    "telefones": [
+        {
+            "id": 38,
+            "numero": "(21) 9889-9234"
+        },
+        {
+            "id": "",
+            "numero": "(21) 9899-9004"
+        }
+    ]
+}
+
+OBS. Também é possível alterar deletando um telefone.
+
+
+

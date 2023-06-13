@@ -461,5 +461,50 @@ Alterando add um novo telefone:
 
 OBS. Também é possível alterar deletando um telefone.
 
+ --------------------------------------------------- // ------------------------------------------------------------------
+ 
+Cross Origin - Controle de acesso a API
+ 
+Por motivos de segurança, os navegadores proíbem chamadas AJAX para recusrsos que residem fora da origem atual.
+ 
+Como uma API Rest é feita para que vários clientes possam acessar, então surgeo controle de acesso denominado CORS.
+ 
+Podemos fazer bloqueios e liberações bem customizadas para cada end-point, para cada controller REST e seus end-points ou até
+ mesmo para todo o projeto e seus end-points. 
+ 
+O controle de acesso a recursos de API através da política de mesma origem (Same-Origin Policy) é uma medida de segurança 
+implementada pelos navegadores para proteger os usuários contra ataques de scripts maliciosos que poderiam ser executados em sites 
+de terceiros. Essa política impede que scripts em um domínio acessem recursos em outro domínio, a menos que os domínios envolvidos 
+estejam explicitamente configurados para permitir tal acesso.
 
+No entanto, em alguns casos, pode ser necessário permitir solicitações de origens diferentes, o que é conhecido como Cross-Origin 
+Resource Sharing (CORS), ou Controle de Acesso a Origem Cruzada. Isso é comum em aplicativos que expõem APIs para consumo por 
+clientes que são hospedados em domínios diferentes. O CORS permite que o servidor especifique quais origens têm permissão para 
+acessar seus recursos através de cabeçalhos HTTP.
+
+O Spring Security oferece suporte ao CORS, permitindo que você controle o acesso a recursos de API a partir de origens diferentes. 
+Para configurar o controle de acesso a origem cruzada no Spring Security, você pode usar a classe CorsConfiguration para definir a 
+política de CORS e, em seguida, configurar um CorsFilter para aplicar essa política.
+
+A configuração básica do CORS no Spring Security envolve a definição de quais origens são permitidas (allowedOrigins), quais 
+métodos HTTP são permitidos (allowedMethods), quais cabeçalhos podem ser incluídos nas solicitações (allowedHeaders), se as 
+credenciais podem ser enviadas (allowCredentials), entre outras opções. Você também pode definir valores específicos para 
+diferentes caminhos da API, se necessário.
+
+Passos:
+
+
+Vamos criar um arquivo index.html e dentro do index.html vamos add uma JQuery CDN para pegar o código de integração, é para garantir o 
+funcionamento do JQuery na  nossa página html. Esse código vai ser pego no endereço:
+(https://releases.jquery.com/) na opção 'uncompressed' e colado dentro da tag <head>.
+
+Vamos acessar o index.html através do caminho pelo 'properties':
+"file:///C:/Users/d4nan/git/repository12/projetospringrestapi/src/main/webapp/index.html"
+
+OBS. Vai abrir uma página em branco.
+
+Se inspecionar (F12) o navegador você visualizará que houve um bloqueio do arquivo index.html pela a política do CORS. Msg gerada:
+
+Access to XMLHttpRequest at 'http://localhost:8080/projetospringrestapi/usuario/' from origin 'null' has been blocked by CORS policy: 
+No 'Access-Control-Allow-Origin' header is present on the requested resource.
 

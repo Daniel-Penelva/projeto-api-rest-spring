@@ -407,4 +407,19 @@ da Aplicação Spring Boot.
    É possível acessar a sua API por outros sistemas ou pelo mobile basta utilizar o link - seria uma intranet
    simulando um servidor:
    http://<ipconfig>:8080/projetospringrestapi/
+   
+   --------------------------------------------------- // ------------------------------------------------------------------
+   
+Criando o POST no postman:
+   
+{
+   "id": "",
+   "login": "joao",
+   "senha": "123",
+   "nome": "João",
+   "telefones": [{"id":"", "numero":"(21) 9944-9223"}, {"id":"", "numero":"(21) 9256-3990"}]
+}
+
+Exemplo de delete no postman:
+http://localhost:8080/projetospringrestapi/usuario/20/
 

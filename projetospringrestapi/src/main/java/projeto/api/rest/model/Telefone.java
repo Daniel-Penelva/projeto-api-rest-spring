@@ -22,9 +22,10 @@ public class Telefone implements Serializable {
 	private String numero;
 
 	// Na regra são muitos telefones para um usuário
+	// optional = false -> restrição (not null) que para cadastrar o telefone é obrigatório ter um usuário
 	@JsonIgnore
 	@org.hibernate.annotations.ForeignKey(name = "usuario_id")
-	@ManyToOne
+	@ManyToOne(optional = false)
 	private Usuario usuario;
 
 	public Long getId() {

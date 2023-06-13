@@ -7,6 +7,7 @@ import java.util.Objects;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -28,7 +29,7 @@ public class Usuario implements Serializable {
 	// Declarando a Lista de Telefones
 	// Na regra um usuario pode ter nenhum ou vários telefones - tem que mapear para o usuário
 	// 'orphanRemoval = true' e 'cascade' -> para remover o usuário e pode ser em cascata
-	@OneToMany(mappedBy = "usuario", orphanRemoval = true, cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "usuario", orphanRemoval = true, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private List<Telefone> telefones = new ArrayList<Telefone>();
 
 	

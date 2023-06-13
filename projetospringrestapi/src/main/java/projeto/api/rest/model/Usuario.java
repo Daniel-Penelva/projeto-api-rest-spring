@@ -31,6 +31,8 @@ public class Usuario implements Serializable {
 	@OneToMany(mappedBy = "usuario", orphanRemoval = true, cascade = CascadeType.ALL)
 	private List<Telefone> telefones = new ArrayList<Telefone>();
 
+	
+	// Getters e setters
 	public Long getId() {
 		return id;
 	}
@@ -63,6 +65,16 @@ public class Usuario implements Serializable {
 		this.nome = nome;
 	}
 
+	public List<Telefone> getTelefones() {
+		return telefones;
+	}
+
+	public void setTelefones(List<Telefone> telefones) {
+		this.telefones = telefones;
+	}
+
+	
+	// HashCode e Equals
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);

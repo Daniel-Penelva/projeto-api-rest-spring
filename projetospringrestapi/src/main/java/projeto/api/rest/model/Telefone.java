@@ -8,6 +8,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class Telefone implements Serializable {
 
@@ -20,6 +22,7 @@ public class Telefone implements Serializable {
 	private String numero;
 
 	// Na regra são muitos telefones para um usuário
+	@JsonIgnore
 	@org.hibernate.annotations.ForeignKey(name = "usuario_id")
 	@ManyToOne
 	private Usuario usuario;

@@ -542,3 +542,12 @@ Em resumo, a anotação @CrossOrigin é usada para configurar o suporte ao Cross
 do Spring. Ela permite que você especifique as origens permitidas, os métodos HTTP permitidos, os cabeçalhos permitidos e outras opções 
 relacionadas ao CORS em nível de controlador ou método específico.
 
+Como foi dito é possível especificar quais origins são permitidas, quais end-points (métodos HTTP) são permitidos, por exemplo, no 
+método 'listaUsuario' vai ser permitido apenas requisições ajax que partirem do servidor 'https://www.google.com/' e 
+'https://www.w3schools.com/' que vão poder acessar o método 'listaUsuario' e consumir os seus dados.
+
+O objetivo da CrossOrigin é para pemitir apenas acesso(s) a domínio(s) que está(ão) estipulado em sua regra de negócio, ninguém poderá 
+saber que existe essa API para quem não está definido em sua regra de negócio, somente saberá aqueles que estarão configurados através 
+da 'origins' que estarão definidos em sua regra de negócio, somente esses poderão consumir os dados da sua API, ou seja, o intuito é 
+amarrar a origem e o destino.
+

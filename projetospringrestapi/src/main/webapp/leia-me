@@ -508,3 +508,37 @@ Se inspecionar (F12) o navegador você visualizará que houve um bloqueio do arq
 Access to XMLHttpRequest at 'http://localhost:8080/projetospringrestapi/usuario/' from origin 'null' has been blocked by CORS policy: 
 No 'Access-Control-Allow-Origin' header is present on the requested resource.
 
+
+Cross Origin - Configuração em controler especifico
+
+Se estiver apenas a anotação '@CrossOrigin' vai permitir que qualquer sistema possa fazer uma requisição, uma vez que por padrão vem 
+com o asteristico (*), que permite para todos. Vale ressaltar que podemos configurar essa anotação através das 'origins', podendo 
+passar quantas origins quiser. Essa origin permite liberar o acesso para o dominio que estiver determinado por ela. Ou seja, vou estar
+amarrando o dominio (servidor) com a minha API, permitindo que apenas o que está configurado na origins possa acessar o meu controller de API, 
+ou seja, que apenas esse controller de API só iria receber requisições do que está configurado na origins.
+
+Portanto, a anotação @CrossOrigin é uma anotação fornecida pelo Spring Framework para configurar o suporte ao Cross-Origin Resource 
+Sharing (CORS) em um controlador de API ou método específico. Essa anotação permite que você controle o acesso a recursos de API a 
+partir de origens diferentes.
+
+Ao usar a anotação @CrossOrigin em um controlador ou método, você pode especificar quais origens são permitidas, quais métodos HTTP 
+são permitidos, quais cabeçalhos podem ser incluídos nas solicitações, se as credenciais podem ser enviadas e outras opções relacionadas 
+ao CORS.
+
+Você também pode usar a anotação @CrossOrigin no nível do controlador para aplicar a mesma configuração a todos os métodos do 
+controlador. Nesse caso, a configuração definida no nível do controlador pode ser substituída por configurações específicas de métodos, 
+se necessário.
+
+Além de especificar as origens permitidas e os métodos HTTP permitidos, a anotação @CrossOrigin oferece outras opções, como 
+allowedHeaders para especificar quais cabeçalhos são permitidos, exposedHeaders para especificar quais cabeçalhos são expostos nas 
+respostas, allowCredentials para permitir o envio de credenciais, maxAge para especificar o tempo máximo de cache das configurações 
+CORS, entre outras.
+
+É importante lembrar que ao usar a anotação @CrossOrigin, você precisa considerar as implicações de segurança e garantir que seu 
+aplicativo esteja adequadamente protegido contra ataques. Você deve configurar as opções de CORS de acordo com suas necessidades 
+específicas e garantir que seu aplicativo esteja protegido contra vulnerabilidades conhecidas associadas ao CORS.
+
+Em resumo, a anotação @CrossOrigin é usada para configurar o suporte ao Cross-Origin Resource Sharing (CORS) em controladores de API 
+do Spring. Ela permite que você especifique as origens permitidas, os métodos HTTP permitidos, os cabeçalhos permitidos e outras opções 
+relacionadas ao CORS em nível de controlador ou método específico.
+

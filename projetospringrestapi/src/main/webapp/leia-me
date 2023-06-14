@@ -580,3 +580,27 @@ Em resumo, o método addCorsMappings é usado para adicionar configurações de 
 mapeamentos de URL e configurar as origens permitidas, métodos HTTP permitidos, cabeçalhos permitidos, envio de credenciais e outras 
 opções relacionadas ao CORS para caminhos específicos do aplicativo.
 
+-------------------------------------------------- // -------------------------------------------------------------
+
+Spring Security - Configurando ROLE
+
+Bom saber - Anotações:
+
+A anotação @SequenceGenerator é usada para gerar valores sequenciais para a chave primária da tabela. Nesse caso, a sequência é 
+chamada "seq_role" e possui um valor inicial de 1 e um tamanho de alocação de 1.
+
+sequenceName -> cria uma sequencia;
+allocationSize -> seja gerado de um em um;
+initialValue -> inicia com o valor 1;
+
+Para aplicar o Spring Security vamos ter que fazer implementar uma interface 'GrantedAuthority', por padrão tem que add o método
+'getAuthority()' do tipo String. Este método retorna o nome do papel, ou seja, o acesso ou a autorização, por exemplo, ROLE_GERENTE.
+
+A classe Role implementa a interface GrantedAuthority da biblioteca Spring Security. Essa interface representa a autoridade ou papel 
+de um usuário em um sistema.
+
+O método getAuthority() é necessário para a interface GrantedAuthority e retorna o nome do papel.
+
+Em resumo, essa classe representa uma entidade "Role" com um identificador único (id) e um nome de papel (nomeRole). A classe também 
+implementa a interface GrantedAuthority para ser utilizada em um sistema de segurança, retornando o nome do papel através do método 
+getAuthority().

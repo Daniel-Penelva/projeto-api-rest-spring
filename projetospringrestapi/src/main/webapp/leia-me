@@ -551,3 +551,32 @@ saber que existe essa API para quem não está definido em sua regra de negócio
 da 'origins' que estarão definidos em sua regra de negócio, somente esses poderão consumir os dados da sua API, ou seja, o intuito é 
 amarrar a origem e o destino.
 
+
+Cross Origin - Configuração centralizada (Para Mapeamento Global que refletem em todo o sistema)
+
+O método addCorsMappings é um método fornecido pela interface WebMvcConfigurer do Spring Framework. Esse método é usado para adicionar 
+configurações de CORS (Cross-Origin Resource Sharing) ao aplicativo Spring MVC.
+
+O CORS é uma política de segurança implementada pelos navegadores para restringir solicitações de recursos de uma origem (domínio) 
+diferente. Ele impede que um script em uma página da web faça solicitações para outra origem, a menos que essa origem tenha configurado 
+as permissões de acesso adequadas.
+
+O método addCorsMappings permite que você defina mapeamentos de URL para aplicar as configurações de CORS a caminhos específicos do 
+seu aplicativo. Por exemplo, você pode permitir que um caminho específico aceite solicitações de uma origem diferente.
+
+No exemplo, dado no 'ProjetospringrestapiApplication.java' o método addCorsMappings está sendo usado para configurar o CORS para 
+qualquer URL que comece com "/usuario/**". Estamos permitindo solicitações apenas da origem "https://google.com", permitindo apenas os 
+métodos GET e POST, permitindo os cabeçalhos "Authorization" e "Content-Type", permitindo o envio de credenciais e definindo um 
+tempo máximo de cache de 3600 segundos.
+
+Com essa configuração, as solicitações CORS para URLs que correspondam ao padrão "/usuario/**" serão permitidas somente da origem 
+especificada, com os métodos, cabeçalhos e outras configurações definidas.
+
+É importante observar que o uso do método addCorsMappings é apenas uma forma de configurar o CORS no Spring MVC. Existem outras 
+opções para configurar o CORS, como o uso da anotação @CrossOrigin em controladores individuais. Você pode escolher a opção mais 
+adequada com base nas necessidades do seu aplicativo.
+
+Em resumo, o método addCorsMappings é usado para adicionar configurações de CORS ao aplicativo Spring MVC. Ele permite definir 
+mapeamentos de URL e configurar as origens permitidas, métodos HTTP permitidos, cabeçalhos permitidos, envio de credenciais e outras 
+opções relacionadas ao CORS para caminhos específicos do aplicativo.
+

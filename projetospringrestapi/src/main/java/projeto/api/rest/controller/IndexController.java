@@ -41,7 +41,6 @@ public class IndexController {
 	}
 
 	// Consultar lista de usuários
-	@CrossOrigin(origins = {"https://www.google.com/", "https://www.w3schools.com/"})
 	@GetMapping(value = "/", produces = "application/json")
 	public ResponseEntity<List<Usuario>> listaUsuario() {
 
@@ -51,7 +50,6 @@ public class IndexController {
 	}
 
 	// Enviar dados de usuário
-	@CrossOrigin(origins = "https://github.com/")
 	@PostMapping(value = "/", produces = "application/json")
 	public ResponseEntity<Usuario> cadastrar(@RequestBody Usuario usuario) {
 

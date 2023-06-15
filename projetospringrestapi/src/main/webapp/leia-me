@@ -700,3 +700,87 @@ Essa anotação em conjunto com @ManyToMany é utilizada para estabelecer um rel
 associam um usuário a um ou mais papéis. As colunas "usuario_id" e "role_id" na tabela de junção são usadas para referenciar os 
 identificadores das entidades "usuario" e "role", respectivamente.
 
+-------------------------------------------------------- // -------------------------------------------------------------
+
+Para criar o Service, vamos implementar a interface UserDetailsService que faz parte do framework de segurança do Spring, que 
+é amplamente utilizado no desenvolvimento de aplicativos Java. Essa interface é uma parte fundamental do subsistema de 
+autenticação e autorização do Spring Security.
+
+A interface UserDetailsService é responsável por carregar os detalhes do usuário durante o processo de autenticação. O Spring 
+Security utiliza essa interface para obter informações sobre o usuário, como nome de usuário, senha e permissões, a partir de 
+uma origem de dados, como um banco de dados ou um serviço web.
+
+A interface UserDetailsService define um único método: public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException{...}
+
+O método loadUserByUsername recebe um nome de usuário como parâmetro e retorna um objeto do tipo UserDetails. A implementação 
+desse método deve buscar as informações do usuário com base no nome de usuário fornecido e retornar um objeto UserDetails 
+populado com essas informações.
+
+A interface UserDetails é outra parte importante do Spring Security. Ela define os detalhes do usuário, incluindo nome de 
+usuário, senha, autoridades (ou seja, as permissões associadas ao usuário) e outros atributos relevantes.
+
+Ao implementar a interface UserDetailsService, você pode personalizar como os detalhes do usuário são obtidos e carregados no 
+processo de autenticação do Spring Security. Isso permite que você integre o Spring Security com diferentes origens de dados, 
+como um banco de dados relacional, um serviço web RESTful ou qualquer outra fonte personalizada.
+
+A implementação da interface UserDetailsService é geralmente feita em conjunto com a configuração do Spring Security, onde 
+você pode definir as regras de autenticação e autorização, como quais usuários têm acesso a determinados recursos e como as 
+senhas são armazenadas e comparadas.
+
+Em resumo, a interface UserDetailsService é uma parte essencial do subsistema de segurança do Spring, permitindo que você 
+personalize como os detalhes do usuário são obtidos durante o processo de autenticação.
+
+Pequeno apanhado sobre a anotação: @Autowired
+
+A anotação @Autowired é uma anotação do Spring Framework que é usada para realizar a injeção de dependência automática. 
+A injeção de dependência é um padrão de design que permite que os objetos obtenham as dependências de que precisam a partir de 
+uma fonte externa, em vez de criá-las internamente.
+
+Quando você usa a anotação @Autowired em uma classe, o Spring irá procurar por uma instância adequada do tipo especificado e a 
+injetará automaticamente no ponto apropriado. Isso elimina a necessidade de criar manualmente as dependências e facilita a 
+configuração e a manutenção do código.
+
+A anotação @Autowired pode ser aplicada em diferentes níveis, como campos, construtores e métodos. 
+Aqui está o exemplo da injeção em campos: 
+
+@Autowired
+UsuarioRepository usuarioRepository;
+
+Nesse caso, o Spring irá procurar por um bean (instância gerenciada pelo Spring) do tipo UsuarioRepository e atribuirá 
+automaticamente essa instância ao campo usuarioRepository.
+
+------ // ---------
+
+Para injeção de construtores - exemplo qualquer:
+
+private final UserService userService;
+
+@Autowired
+public MyController(UserService userService) {
+    this.userService = userService;
+}
+
+Ao usar a anotação @Autowired em um construtor, o Spring irá procurar por um bean do tipo UserService e passará automaticamente 
+essa instância como argumento para o construtor. Isso é conhecido como injeção de dependência por construtor.
+
+------ // ---------
+
+Para injeção de métodos - exemplo qualquer:
+
+@Autowired
+public void setUserService(UserService userService) {
+    this.userService = userService;
+}
+
+A anotação @Autowired também pode ser usada em métodos, permitindo que o Spring injete automaticamente a dependência no método.
+
+Além disso, é possível combinar a anotação @Autowired com outras anotações, como @Qualifier para especificar qual bean deve 
+ser injetado quando existem várias opções disponíveis.
+
+É importante observar que a anotação @Autowired requer a configuração adequada do Spring para funcionar corretamente. Você 
+precisa configurar o contêiner do Spring para escanear as classes e gerenciar as dependências corretamente, geralmente por 
+meio de arquivos de configuração ou usando a anotação @ComponentScan em uma classe de configuração.
+
+Em resumo, a anotação @Autowired do Spring Framework é usada para realizar a injeção de dependência automática, permitindo 
+que as dependências sejam injetadas automaticamente em campos, construtores ou métodos, facilitando a configuração e a 
+manutenção do código.

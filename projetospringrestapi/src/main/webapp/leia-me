@@ -604,3 +604,99 @@ O método getAuthority() é necessário para a interface GrantedAuthority e reto
 Em resumo, essa classe representa uma entidade "Role" com um identificador único (id) e um nome de papel (nomeRole). A classe também 
 implementa a interface GrantedAuthority para ser utilizada em um sistema de segurança, retornando o nome do papel através do método 
 getAuthority().
+
+----------------------------------------------------- // --------------------------------------------------------------------
+
+Spring Security - Configurando Usuário
+
+Vamos retirar o implements Serializable e colocar o 'UserDetails' que no caso já vem com um Serializable nela.
+
+A interface `UserDetails` faz parte do framework Spring Security e é usada para representar informações sobre um usuário autenticado 
+no sistema. Ela encapsula detalhes sobre o usuário, como seu nome, senha, autorizações (papéis/roles), status de conta e outras 
+informações relevantes.
+
+A principal função da interface `UserDetails` é fornecer essas informações ao Spring Security durante o processo de autenticação e 
+autorização. Quando um usuário faz login no sistema, o Spring Security precisa obter os detalhes desse usuário para verificar sua 
+autenticidade e determinar quais recursos e ações ele tem permissão para acessar.
+
+A interface `UserDetails` define vários métodos que precisam ser implementados, como:
+
+- `getUsername()`: Retorna o nome de usuário do usuário.
+- `getPassword()`: Retorna a senha do usuário.
+- `getAuthorities()`: Retorna uma coleção de objetos `GrantedAuthority`, que representam as autorizações ou papéis do usuário.
+- `isEnabled()`: Verifica se a conta do usuário está habilitada.
+- `isAccountNonExpired()`: Verifica se a conta do usuário não está expirada.
+- `isAccountNonLocked()`: Verifica se a conta do usuário não está bloqueada.
+- `isCredentialsNonExpired()`: Verifica se as credenciais do usuário não estão expiradas.
+
+Além desses métodos, a interface `UserDetails` possui outros métodos relacionados a informações adicionais do usuário, como nome 
+completo, e-mail, informações de contato, etc.
+
+Ao implementar a interface `UserDetails`, você fornece ao Spring Security uma maneira de acessar e utilizar os detalhes do usuário 
+durante o processo de autenticação e autorização, garantindo a segurança adequada do sistema.
+
+Temos o método: public Collection<? extends GrantedAuthority> getAuthorities(){...}. 
+Vamos analisar o que ele faz:
+
+Este método retorna uma coleção de objetos que implementam a interface GrantedAuthority. A declaração 
+Collection<? extends GrantedAuthority> indica que o método retorna uma coleção de qualquer tipo que seja ou estenda a interface 
+GrantedAuthority. O uso de ? extends GrantedAuthority permite que diferentes implementações de GrantedAuthority sejam retornadas.
+
+Vai retornar uma coleção real de autorizações. Normalmente, em um sistema real, você implementaria a lógica dentro desse método para 
+recuperar as autorizações (ou papéis) do usuário. Isso pode ser feito consultando o banco de dados ou qualquer outra fonte de dados 
+para obter as informações de autorização associadas ao usuário autenticado.
+
+A idéia geral é que esse método retorne uma coleção de objetos GrantedAuthority que representam os papéis ou autorizações do usuário. 
+Essas autorizações são usadas pelo Spring Security para determinar quais recursos e ações o usuário tem permissão para acessar.
+
+Vamos entender essa anotação declarada na List<Roles> roles:
+
+@JoinTable(
+    name = "usuarios_role",
+    uniqueConstraints = @UniqueConstraint(
+        columnNames = {"usuario_id", "role_id"},
+        name = "unique_role_user"
+    ),
+    joinColumns = @JoinColumn(
+        name = "usuario_id",
+        referencedColumnName = "id",
+        table = "usuario",
+        foreignKey = @ForeignKey(
+            name = "usuario_fk",
+            value = ConstraintMode.CONSTRAINT
+        )
+    ),
+    inverseJoinColumns = @JoinColumn(
+        name = "role_id",
+        referencedColumnName = "id",
+        table = "role",
+        foreignKey = @ForeignKey(
+            name = "role_fk",
+            value = ConstraintMode.CONSTRAINT
+        )
+    )
+)
+
+A anotação @JoinTable é usada em mapeamentos Many-to-Many em entidades JPA para especificar a tabela de junção que será usada para 
+associar duas entidades.
+
+name = "usuarios_role": Especifica o nome da tabela de junção que será criada para associar as entidades "usuarios" e "role". Neste 
+caso, a tabela será chamada "usuarios_role".
+
+uniqueConstraints: Permite definir uma ou mais restrições de unicidade para as colunas da tabela de junção. No exemplo, é definida 
+uma restrição de unicidade composta pelas colunas "usuario_id" e "role_id" e é atribuído o nome "unique_role_user" para essa restrição.
+
+joinColumns: Especifica as colunas da tabela de junção que se referem à entidade "usuario". No exemplo, é definida uma coluna chamada 
+"usuario_id" que se refere à coluna "id" da tabela "usuario". A anotação @JoinColumn também permite especificar o nome da tabela, 
+caso seja diferente do nome padrão da entidade. Além disso, é definida uma restrição de chave estrangeira com o nome "usuario_fk" 
+usando @ForeignKey e ConstraintMode.CONSTRAINT.
+
+inverseJoinColumns: Especifica as colunas da tabela de junção que se referem à entidade "role". No exemplo, é definida uma coluna 
+chamada "role_id" que se refere à coluna "id" da tabela "role". Assim como em joinColumns, é definida uma restrição de chave 
+estrangeira com o nome "role_fk".
+
+Essa anotação em conjunto com @ManyToMany é utilizada para estabelecer um relacionamento muitos-para-muitos entre as entidades 
+"usuarios" e "role" através de uma tabela de junção intermediária chamada "usuarios_role". Essa tabela armazena os registros que 
+associam um usuário a um ou mais papéis. As colunas "usuario_id" e "role_id" na tabela de junção são usadas para referenciar os 
+identificadores das entidades "usuario" e "role", respectivamente.
+

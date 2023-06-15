@@ -784,3 +784,39 @@ meio de arquivos de configuração ou usando a anotação @ComponentScan em uma 
 Em resumo, a anotação @Autowired do Spring Framework é usada para realizar a injeção de dependência automática, permitindo 
 que as dependências sejam injetadas automaticamente em campos, construtores ou métodos, facilitando a configuração e a 
 manutenção do código.
+
+------------------------------------------------------------- // ------------------------------------------------------------
+
+A classe `WebSecurityConfigurerAdapter` é uma classe fornecida pelo Spring Security, que simplifica a configuração do sistema de 
+segurança em um aplicativo web. Ela serve como uma base para criar uma configuração personalizada do Spring Security para proteger 
+seus endpoints, autenticar usuários e aplicar regras de autorização.
+
+Ao estender a classe `WebSecurityConfigurerAdapter` e anotar a classe derivada com `@Configuration`, você pode personalizar o 
+comportamento do Spring Security no seu aplicativo web. A classe `WebSecurityConfigurerAdapter` fornece métodos que você pode 
+sobrescrever para definir diferentes aspectos da configuração de segurança.
+
+Aqui estão alguns dos métodos mais comuns que você pode sobrescrever ao estender `WebSecurityConfigurerAdapter`:
+
+-> `configure(HttpSecurity http)`: Este método permite configurar as regras de segurança para diferentes URLs, como definir permissões 
+   de acesso, exigir autenticação, configurar filtros de segurança, etc. Você pode especificar as configurações de segurança usando 
+   a sintaxe do DSL do Spring Security.
+
+-> `configure(AuthenticationManagerBuilder auth)`: Este método permite configurar a forma como a autenticação dos usuários é tratada. 
+   Você pode definir detalhes sobre a origem dos usuários, como uma tabela de usuários em um banco de dados, serviço LDAP ou outro 
+   provedor de autenticação personalizado. Você também pode configurar a codificação de senhas, fornecer detalhes sobre os usuários e 
+   seus papéis, entre outras opções relacionadas à autenticação.
+
+-> `configure(WebSecurity web)`: Este método é usado para configurações de segurança relacionadas a recursos estáticos, como arquivos 
+   CSS, JavaScript, imagens, etc. Aqui, você pode especificar caminhos que devem ser ignorados pelo mecanismo de segurança do Spring.
+
+Ao estender a classe `WebSecurityConfigurerAdapter`, você pode combinar e personalizar esses métodos para atender aos requisitos de 
+segurança específicos do seu aplicativo. Você pode adicionar regras de autorização, definir como os usuários são autenticados, 
+configurar diferentes mecanismos de autenticação, como login baseado em formulário, autenticação baseada em token, autenticação OAuth, 
+entre outros.
+
+A classe `WebSecurityConfigurerAdapter` também funciona em conjunto com outras anotações do Spring Security, como `@EnableWebSecurity`, 
+que habilita a configuração de segurança baseada em `WebSecurityConfigurerAdapter`, e `@EnableGlobalMethodSecurity`, que permite a 
+segurança a nível de método.
+
+Em resumo, a classe `WebSecurityConfigurerAdapter` do Spring Security fornece uma base conveniente para configurar a segurança em um 
+aplicativo web. Ela permite personalizar as regras de segurança, autenticação e autorização para proteger os endpoints do seu aplicativo.

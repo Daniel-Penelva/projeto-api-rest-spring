@@ -1,5 +1,6 @@
 package projeto.api.rest.security;
 
+import java.io.IOException;
 import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
@@ -34,7 +35,7 @@ public class JWTTokenAutenticacaoService {
 	
 	
 	/* Gerando token de autenticação e adicionando ao cabeçalho e resposta HTTP */
-	public void addAuthentication(HttpServletResponse response, String username) throws Exception{
+	public void addAuthentication(HttpServletResponse response, String username) throws IOException{
 		
 		
 		/*Mostragem do token:

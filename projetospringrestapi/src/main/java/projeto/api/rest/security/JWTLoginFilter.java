@@ -47,7 +47,8 @@ public class JWTLoginFilter extends AbstractAuthenticationProcessingFilter{
 	}
 	
 	
-	
+    /* OBS. Tive que alterar a exceção de Exception para IOException dentro do método 'addAuthentication'. Não esquece de 
+     * fazer o import (ctrl + o) */
 	@Override
 	protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain,
 			Authentication authResult) throws IOException, ServletException {

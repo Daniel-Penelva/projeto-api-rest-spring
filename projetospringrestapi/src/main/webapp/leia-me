@@ -1087,4 +1087,36 @@ como autenticação baseada em formulário, autenticação baseada em token ou a
 Geralmente, você estenderá a classe AbstractAuthenticationProcessingFilter para criar sua própria classe de filtro de 
 autenticação personalizada, implementando os métodos abstratos necessários e adicionando lógica adicional, se necessário, para 
 atender aos requisitos específicos do seu aplicativo.      
-          
+
+------------------------------------------------------------ // --------------------------------------------------------------
+
+A classe `GenericFilterBean` é uma classe abstrata fornecida pelo framework Spring que implementa a interface `Filter` do Java 
+Servlet API. Ela fornece uma implementação básica e genérica de um filtro de servlet, permitindo que você crie filtros 
+personalizados de maneira mais fácil.
+
+Um filtro, no contexto do desenvolvimento web, é um componente que processa solicitações e respostas HTTP. Ele é usado para 
+realizar tarefas de processamento adicionais antes ou depois que a solicitação seja passada para o servlet ou depois que a 
+resposta tenha sido gerada pelo servlet.
+
+Ao estender a classe `GenericFilterBean`, você pode criar seu próprio filtro personalizado, implementando o método `doFilter()` 
+fornecido pela interface `Filter`. Esse método é invocado pelo contêiner servlet para processar uma solicitação e resposta. 
+Dentro do método `doFilter()`, você pode adicionar a lógica necessária para manipular a solicitação e resposta de acordo com 
+seus requisitos.
+
+A classe `GenericFilterBean` também oferece alguns métodos adicionais que você pode sobrescrever, se necessário, para 
+personalizar ainda mais o comportamento do seu filtro:
+
+- `initFilterBean()`: Este método é chamado pelo contêiner servlet durante a inicialização do filtro. Você pode usar esse 
+                      método para realizar qualquer inicialização necessária, como carregar recursos ou configurar objetos.
+
+- `destroy()`: Este método é chamado pelo contêiner servlet durante a destruição do filtro. É usado para liberar quaisquer 
+               recursos alocados pelo filtro.
+
+Além disso, a classe `GenericFilterBean` implementa a interface `BeanNameAware`, o que significa que ela recebe o nome do 
+bean no contexto do Spring durante a inicialização. O nome do bean pode ser útil em certos cenários para obter informações 
+sobre o filtro ou para interagir com outros componentes do Spring.
+
+Ao criar uma classe que estende `GenericFilterBean` e implementa a lógica de filtragem no método `doFilter()`, você pode 
+configurar esse filtro personalizado no contexto do Spring e definir a ordem em que ele deve ser executado usando a 
+configuração apropriada.
+

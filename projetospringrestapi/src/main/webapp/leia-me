@@ -1,5 +1,7 @@
 Acessar a aplicação: http://localhost:8080/
 Acessando mapeando o usuario: http://localhost:8080/usuario/ 
+http://localhost:8080/projetospringrestapi/usuario/
+http://localhost:8080/projetospringrestapi/login
    
    
    Evolução dos Serviços
@@ -1120,3 +1122,28 @@ Ao criar uma classe que estende `GenericFilterBean` e implementa a lógica de fi
 configurar esse filtro personalizado no contexto do Spring e definir a ordem em que ele deve ser executado usando a 
 configuração apropriada.
 
+--------------------------------------------------------------- // ---------------------------------------------------------
+
+Testando a autenticação do JSON no postman
+
+Vamos fazer um POST usando a URL http://localhost:8080/projetospringrestapi/login 
+
+IMPORTANTE!!! Vale ressaltar que no Spring Security na Classe WebConfigSecurity no código 'passwordEncoder(new BCryptPasswordEncoder())'
+determina um padrão de codificação de senha que precisa ser respeitado. Para contornar e garantir o teste vamos adicionar na 
+classe "ProjetospringrestapiApplication" o código "System.out.println(new BCryptPasswordEncoder().encode("123"));" para poder 
+fazer os testes, ao fazer isso vai ser gerado uma senha no console, basta copiá-la e colar no teste do JSON, por exemplo:
+
+Vamos criar esse usuário no banco de dados e adicionado a senha gerada no console "$2a$10$iiWhmMcBGLXwu/DmwAN8.u69QDTk192LdGFw5g6e9PQ1ECBBSAyfG", 
+essa senha é a senha 123 só que codificada. Agora, podemos testar no JSON.
+
+JSON:
+{
+    "login": "admin",
+    "senha": "123"
+}
+
+Ao fazer o teste no postman vai gerar:
+
+{"Authorization": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTY4NzEzMjE3OX0.KYNPh_XfGfwKztzQ-A1zYs-wjW4dcL09Sznpr0hEZXDn4IhU4vMsopTmR03WnYujus-tP1vUVweykTi8tZOkFg"}
+
+Todo esse valor é o nosso token gerado pelo Spring Security.

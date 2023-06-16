@@ -820,3 +820,155 @@ segurança a nível de método.
 
 Em resumo, a classe `WebSecurityConfigurerAdapter` do Spring Security fornece uma base conveniente para configurar a segurança em um 
 aplicativo web. Ela permite personalizar as regras de segurança, autenticação e autorização para proteger os endpoints do seu aplicativo.
+
+
+------------------------------------------------------------- // ------------------------------------------------------------
+
+Entendendo Tokens JWT (Json Web Token)
+
+O JWT é um padrão (RFC-7519) de mercado que define como transmitir e armazenar objetos JSON de forma compactada e segura entre 
+diferentes aplicações usando a arquitetura REST ou Microserviços ou sendo RestFul e JSON.
+
+Os dados nele contidos podem ser validados a qualquer momento, pois o token é assinado digitalmente e sua validação é feita a cada 
+requisição. Ele é formado por três seções: Header, Payload e Signature.
+
+ -> Header - Define informações sobre o tipo de token, nesse caso o JWT.
+ 
+ -> Payload - Contém as informações da entidade autorizada, no caso o usuário que fez o login.
+ 
+ -> Signature - A assinatura é a junção de todas as partes somando a uma chave de assinatura ou certificado e tudo é codificado em 
+                Base64.
+                
+Vantagens: Permite a comunicação segura entre diferentes sistemas e integrações e também evita que os dados sejam capturados por rede
+e manipulados de forma errada por alguém com más intenções.
+ 
+Mais Detalhes:
+JWT (JSON Web Token) é um padrão aberto (RFC 7519) para tokenização de informações em formato JSON, usado para transmitir dados de 
+forma segura entre duas partes. Os tokens JWT são amplamente utilizados na autenticação e autorização de APIs e aplicativos web.
+
+Um token JWT consiste em três partes separadas por pontos: o cabeçalho (header), a carga útil (payload) e a assinatura (signature). 
+Cada parte é codificada em Base64URL e concatenada com pontos.
+
+- O cabeçalho (header) especifica o tipo de token e o algoritmo de assinatura usado. Ele geralmente inclui informações como o tipo de 
+token (JWT) e o algoritmo de criptografia usado, como o HMAC, RSA ou o algoritmo de assinatura digital ECDSA.
+
+- A carga útil (payload) contém as informações do token, como o identificador do usuário, as permissões associadas e quaisquer outros 
+dados relevantes. A carga útil pode ser personalizada de acordo com as necessidades do aplicativo.
+
+- A assinatura (signature) é gerada usando a chave secreta do servidor ou uma chave privada, para verificar a integridade dos dados do
+ token e garantir que ele não tenha sido alterado. A assinatura é calculada com base no cabeçalho, na carga útil e na chave de 
+ assinatura, usando o algoritmo especificado no cabeçalho do token.
+
+Ao receber um token JWT, o servidor pode verificar sua validade e autenticidade verificando a assinatura. Se a assinatura for válida, 
+o servidor pode confiar nas informações contidas no token para autenticar o usuário e conceder acesso aos recursos solicitados.
+
+Uma das principais vantagens dos tokens JWT é a portabilidade e a facilidade de uso em ambientes distribuídos. Os tokens são 
+autossuficientes, ou seja, todas as informações necessárias estão contidas no próprio token, o que elimina a necessidade de consultar 
+um banco de dados ou armazenar informações de sessão no servidor. Isso torna os tokens JWT escaláveis e adequados para arquiteturas 
+de microsserviços e APIs RESTful.
+
+Além disso, os tokens JWT são assinados digitalmente, o que garante a integridade dos dados e impede a manipulação por parte de 
+terceiros. No entanto, é importante garantir a segurança das chaves de assinatura e proteger o token contra ações maliciosas, como 
+roubo ou falsificação.
+
+No contexto de autenticação, um fluxo comum usando tokens JWT envolve a geração do token após um processo de autenticação bem-sucedido 
+(geralmente com nome de usuário e senha). O token é então enviado para o cliente e incluído nas solicitações subsequentes como um 
+cabeçalho de autorização. O servidor valida o token a cada solicitação e concede acesso aos recursos protegidos.
+
+Em resumo, os tokens JWT são uma forma popular de autenticação e autorização em aplicativos web e APIs. Eles fornecem uma maneira 
+segura e portável de transmitir informações entre duas partes, garantindo a integridade e autenticidade dos dados.
+ 
+ 
+< Exemplificando abaixo um token JWT com a parte do cabeçalho (header) > 
+
+```
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+```
+
+Nesse exemplo, o cabeçalho é representado por uma string codificada em Base64URL: `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9`.
+
+Ao decodificar essa string em Base64URL, obtemos o seguinte JSON:
+
+
+{
+  "alg": "HS256",
+  "typ": "JWT"
+}
+
+
+Aqui está a descrição das propriedades do cabeçalho:
+
+- `alg`: Indica o algoritmo de assinatura utilizado para gerar a assinatura do token. Neste exemplo, o valor é "HS256", que 
+         corresponde ao algoritmo HMAC-SHA256.
+
+- `typ`: Indica o tipo de token. Neste caso, o valor é "JWT", indicando que é um JSON Web Token.
+
+Essas informações no cabeçalho são usadas pelo servidor para entender como a assinatura do token foi gerada e como ela pode ser 
+verificada.
+
+É importante ressaltar que o cabeçalho de um token JWT não contém informações sensíveis ou privadas. Seu propósito principal é 
+informar ao servidor sobre o tipo e o algoritmo usado no token. As informações confidenciais, como o identificador do usuário e as 
+permissões, são geralmente incluídas na carga útil (payload) do token.
+
+Lembre-se de que o exemplo acima é apenas uma representação do cabeçalho em formato codificado. Em um cenário real, o token completo 
+seria composto pelo cabeçalho, a carga útil e a assinatura, todos separados por pontos e codificados em Base64URL.
+
+
+
+                                   < JWT - Funcionamento e estrutura >
+                                 
+         Cliente Navegador                                                        Servidor Back-end
+           
+              |                 1º Cliente faz o login passando o usuário e senha           |       2º - Valida usuario e senha 
+              | --------------------------------------------------------------------------> |    |      e gera o JWT secreto 
+              |                                                                             |    |
+              |                 3º Servidor retorna o JWT para o usuário                    |    V
+              | <-------------------------------------------------------------------------- |    
+              |                                                                             |
+              |                 4º Envia o JWT nas próximas solicitações                    |
+              | --------------------------------------------------------------------------> |
+              |                                                                             |    | 5º - Valida e libera acesso
+              |                                                                             |    |             a API
+              |                                                                             |    |                                                                 
+              |                  6º Retorno é enviado ao navegador/usuário                  |    V
+              | <-------------------------------------------------------------------------- |    
+          
+          
+          
+          
+                                   < Estrutura de classes JWT Token>
+                                   
+[OBS. Podemos implementar na seguinte ordem: 1º, 2º, 3º e 4º.]
+                                   
+                                   
+ Estende de AbstractAuthenticationProcessingFilter                                 Estende de GenericFilterBean é o nosso 
+     e estabelece o nosso gerenciador de Token                                      filto que captura as requisições e
+        (2º)                                                                                   diz para autenticar  (3º)
+               |----------------|                                                     |---------------------------|             
+               | JWTLoginFilter | <-----------------------         -----------------> | JWTAPIAutenticationFilter |                                                                              
+               |----------------|                        |        |                   |---------------------------|                
+                        |                                |        |                                    |
+                        |                                |        |                                    |
+                        |                                |        |                                    |
+                        |                                |        |                                    |
+                        |                         |-------------------|                                |
+                        |                         | WebConfigSecurity |                                |
+                        |                         |-------------------|                                |
+                        |                                                                              |
+                        |                     Mapeia toda a parte de segurança                         |
+                        |                      e registra as classes de token  (4º)                    |
+                        V                                                                              |
+               |-----------------------------|                                                         |
+               | JWTTokenAutenticacaoService | <--------------------------------------------------------             
+               |-----------------------------|  
+             
+             Gera o nosso token e também valida 
+                      o token enviado                      
+                   (1º)                
+                                   
+                                   
+                                   
+                                   
+          
+          
+          

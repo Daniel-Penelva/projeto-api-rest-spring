@@ -966,9 +966,87 @@ seria composto pelo cabeçalho, a carga útil e a assinatura, todos separados po
                       o token enviado                      
                    (1º)                
                                    
+--------------------------------------------------------- // ----------------------------------------------------------------
+                           
+Bom saber sobre a interface ApplicationContextAware:
+
+A interface ApplicationContextAware é uma interface fornecida pelo Spring Framework que permite que uma classe seja informada 
+sobre o contexto do aplicativo Spring em que está sendo executada. Ao implementar essa interface, a classe se torna ciente do 
+contexto de aplicativo e pode interagir com ele.
+
+A interface ApplicationContextAware define um único método: 
+
+void setApplicationContext(ApplicationContext applicationContext) throws BeansException {...}
+
+Esse método é chamado pelo contêiner do Spring assim que o contexto do aplicativo é criado e pronto para uso. O próprio 
+contêiner injeta o contexto do aplicativo nesse método, permitindo que a classe tenha acesso ao contexto e utilize suas 
+funcionalidades.
+
+Ao implementar a interface ApplicationContextAware e fornecer uma implementação para o método setApplicationContext, é possível 
+realizar várias tarefas, como:
+
+ -> Acesso a beans gerenciados: A classe pode usar o contexto do aplicativo para obter instâncias de beans gerenciados pelo 
+                                Spring. Ela pode solicitar ao contexto a instância de um bean específico por meio de seu nome 
+                                ou tipo.
+
+ -> Registro de beans personalizados: A classe pode interagir com o contexto do aplicativo para registrar novos beans 
+                                      personalizados. Isso pode ser útil em cenários em que um componente precisa ser 
+                                      dinamicamente adicionado ao contexto do aplicativo.
+
+ -> Configuração adicional: A classe pode realizar configurações adicionais com base no contexto do aplicativo. Isso inclui 
+                            acessar propriedades de configuração, definir valores de configuração específicos do contexto ou 
+                            executar ações personalizadas durante o ciclo de vida do aplicativo.
+
+A implementação da interface ApplicationContextAware é uma maneira de obter acesso direto ao contexto do aplicativo Spring. 
+No entanto, é importante lembrar que a dependência direta no contexto do aplicativo pode acoplar a classe a um contêiner 
+específico e limitar a portabilidade. Portanto, é recomendado usar essa interface com cautela e considerar a necessidade real 
+de acesso direto ao contexto do aplicativo. Em muitos casos, é preferível usar a injeção de dependência adequada por meio das 
+anotações @Autowired ou @Inject.                            
                                    
-                                   
-                                   
-          
-          
+----------------------------------------------------------- // --------------------------------------------------------------
+
+A classe `UsernamePasswordAuthenticationToken` é uma implementação da interface `Authentication` fornecida pelo Spring Security. 
+Ela é comumente usada para representar uma solicitação de autenticação baseada em nome de usuário e senha.
+
+Essa classe representa as credenciais fornecidas pelo usuário durante o processo de autenticação e encapsula as informações 
+necessárias para autenticar o usuário no sistema. Ela contém dois campos principais:
+
+1. **Username (nome de usuário)**: Representa o nome de usuário fornecido pelo usuário durante a autenticação. Geralmente, é 
+   uma string que identifica exclusivamente o usuário.
+
+2. **Password (senha)**: Representa a senha fornecida pelo usuário durante a autenticação. É uma string que corresponde à senha 
+   associada ao nome de usuário.
+
+Além desses campos, a classe `UsernamePasswordAuthenticationToken` também herda vários outros métodos e propriedades da classe 
+`AbstractAuthenticationToken`, como `getAuthorities()`, `getPrincipal()`, `getCredentials()`, entre outros.
+
+O método 'getAuthorities()' retorna uma coleção de objetos GrantedAuthority, que representam as permissões ou papéis atribuídos 
+a um usuário autenticado. As permissões podem ser usadas posteriormente para tomar decisões de autorização com base nos 
+privilégios concedidos ao usuário.
+
+A interface GrantedAuthority é uma interface básica do Spring Security que define o método getAuthority(), que retorna uma 
+representação em string da permissão ou papel. Geralmente, uma permissão é definida como uma string única, como "ROLE_ADMIN" 
+ou "ROLE_USER".
+
+A coleção de GrantedAuthority retornada pelo método getAuthorities() pode ser usada em várias situações, como:
+
+ -> Decisões de autorização: As permissões podem ser usadas para controlar o acesso a determinados recursos com base nos 
+                             privilégios do usuário. Por exemplo, um método ou uma página pode ser protegido e permitido 
+                             apenas para usuários com uma determinada permissão.
+
+ -> Personalização de comportamento: Com base nas permissões atribuídas ao usuário, é possível personalizar o comportamento do 
+                                     aplicativo. Por exemplo, exibir ou ocultar certas funcionalidades com base nos privilégios 
+                                     do usuário.
+
+Normalmente, a classe `UsernamePasswordAuthenticationToken` é utilizada em conjunto com outros componentes do Spring Security, 
+como `AuthenticationManager`, `AuthenticationProvider` e `UserDetailsService`, para realizar o processo de autenticação.
+
+Ao receber as informações de nome de usuário e senha do usuário, é comum criar uma instância de `UsernamePasswordAuthenticationToken` 
+com essas informações e passá-la para o `AuthenticationManager`. O `AuthenticationManager` é responsável por validar as 
+credenciais do usuário e, se forem válidas, retornar uma instância de `Authentication` preenchida com informações adicionais, 
+como as permissões (ou papéis) do usuário.
+
+Em resumo, a classe `UsernamePasswordAuthenticationToken` é usada no Spring Security para representar as credenciais fornecidas 
+pelo usuário durante a autenticação baseada em nome de usuário e senha. Ela encapsula o nome de usuário e a senha, e é usada 
+em conjunto com outros componentes do Spring Security para realizar o processo de autenticação e autorização de usuários.        
           

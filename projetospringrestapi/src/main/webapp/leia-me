@@ -1136,6 +1136,8 @@ fazer os testes, ao fazer isso vai ser gerado uma senha no console, basta copiá
 Vamos criar esse usuário no banco de dados e adicionado a senha gerada no console "$2a$10$iiWhmMcBGLXwu/DmwAN8.u69QDTk192LdGFw5g6e9PQ1ECBBSAyfG", 
 essa senha é a senha 123 só que codificada. Agora, podemos testar no JSON.
 
+OBS. Para cada usuário testado tem que gerar uma nova senha no console.
+
 JSON:
 {
     "login": "admin",
@@ -1147,3 +1149,65 @@ Ao fazer o teste no postman vai gerar:
 {"Authorization": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTY4NzEzMjE3OX0.KYNPh_XfGfwKztzQ-A1zYs-wjW4dcL09Sznpr0hEZXDn4IhU4vMsopTmR03WnYujus-tP1vUVweykTi8tZOkFg"}
 
 Todo esse valor é o nosso token gerado pelo Spring Security.
+
+-------------------------------------------------------- // ------------------------------------------------------------------
+
+Ententendo a geração do JWT (do token) e consultando e deletando no postman:
+
+Na classe "JWTTokenAutenticacaoService" no código "response.getWriter().write("{\"Authorization\": \""+token+"\"}");" vai ser 
+o responsável por escrever o formato do token. 
+
+No código "response.addHeader(HEADER_STRING, token);" vai jogar o token na  header (cabeçalho),  e podemos ver essa autorização 
+no teste do postman ao executar o POST, na aba de resultado do Header é possível ver as chaves, no caso vai haver a chave de 
+autorização gerada pelo JWT do Spring Security. 
+A chave gerada mostrada no postman: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTY4NzEzMjE3OX0.KYNPh_XfGfwKztzQ-A1zYs-wjW4dcL09Sznpr0hEZXDn4IhU4vMsopTmR03WnYujus-tP1vUVweykTi8tZOkFg
+
+O próximo passo é entender como esse token vai ser enviado junto com a requisição, para só assim, por exemplo, fazer um cadastro, 
+ou uma consulta e entre outras operações. Com esse token agora temos a autorização para tais operações.
+
+< Para o método GET - no postman: > 
+
+Feito o POST vamos copiar o token sem o Bearer, logo ficaria assim: 
+eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTY4NzEzMjE3OX0.KYNPh_XfGfwKztzQ-A1zYs-wjW4dcL09Sznpr0hEZXDn4IhU4vMsopTmR03WnYujus-tP1vUVweykTi8tZOkFg
+
+Depois vamos fazer um GET inserindo a seguinte URL: http://localhost:8080/projetospringrestapi/usuario/42
+E na aba de "Authorization" vamos escolher a opção "Token Bearer" e ao clicar nessa opção vai abrir um input onde será 
+colado o o token copiado. Por fim faz o "Send". Ou seja, vamos está mandando a requisição + a autorização JWT para que a 
+requisição possa ser efetuada com sucesso. 
+
+Retorno do JSON:
+
+{
+    "id": 42,
+    "login": "daniel",
+    "senha": "$2a$10$usL0mVEWVgDkCoMyD15qlOAVr6di.ra3Sh4oalCYJORwyGJnyhqvC",
+    "nome": "Daniel",
+    "telefones": [],
+    "enabled": true,
+    "password": "$2a$10$usL0mVEWVgDkCoMyD15qlOAVr6di.ra3Sh4oalCYJORwyGJnyhqvC",
+    "username": "daniel",
+    "accountNonExpired": true,
+    "credentialsNonExpired": true,
+    "authorities": [],
+    "accountNonLocked": true
+}
+
+
+OBSERVAÇÃO - OUTRA FORMA DE UTILIZAR A AUTENTICAÇÃO !!!
+Podemos fazer o também o GET (http://localhost:8080/projetospringrestapi/usuario/42) passando a autorização pelo Header. 
+Para isso vamos ter que copiar a identificação da localização do tokken, no caso é "Authorization" fica na classe JWTTokenAutenticacaoService.
+
+No postman vamos na aba "Header" e vamos criar uma key e vamos colar o "Authorization". Depois vamos na aba Authorization e
+vamos colar o token, mas dessa vez vamos colocar o 'Bearer' na frente do token, por exemplo, 
+
+Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTY4NzEzMjE3OX0.KYNPh_XfGfwKztzQ-A1zYs-wjW4dcL09Sznpr0hEZXDn4IhU4vMsopTmR03WnYujus-tP1vUVweykTi8tZOkFg
+
+
+< Para o método DELETE - no postman: >
+
+É o mesmo processo, basta adicionar o token na aba de "Authorization" e adicionar o link com o id do usuário que deseja deletar, 
+lembrando que o token criado é do respectivo id usuario que deseja deletar. 
+A URL para testar no Postman: http://localhost:8080/projetospringrestapi/usuario/43
+
+
+

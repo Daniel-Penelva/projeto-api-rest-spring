@@ -166,6 +166,27 @@ public class IndexController {
 	 *     cada telefone. Isso garante que os telefones sejam atualizados corretamente no banco de dados quando o usuário é 
 	 *     atualizado.
 	 *     
+	 * Usuario userTemporario = usuarioRepository.findUserByLogin(usuario.getLogin());
+	 *  -> usuarioRepository é um objeto que realiza operações de acesso a dados relacionadas aos usuários.
+	 *  -> findUserByLogin(usuario.getLogin()) é um método que recebe o login do usuário como parâmetro e retorna o usuário correspondente no banco de dados com base nesse login.
+	 *  -> O resultado é armazenado na variável userTemporario, que representa o usuário recuperado do banco de dados.
+	 * 
+	 * Dentro da condição if:
+	 *  -> userTemporario.getSenha() retorna a senha armazenada no banco de dados para o usuário recuperado.
+	 *  -> usuario.getSenha() retorna a senha fornecida pelo usuário.
+	 *  -> A condição !userTemporario.getSenha().equals(usuario.getSenha()) verifica se a senha fornecida pelo usuário é 
+	 *     diferente da senha armazenada no banco de dados. Se as senhas forem diferentes, o código dentro do bloco if será 
+	 *     executado. 
+	 * -> new BCryptPasswordEncoder().encode(usuario.getSenha()) cria um objeto BCryptPasswordEncoder e utiliza seu método 
+	 *     encode para criptografar a senha fornecida pelo usuário. A senha criptografada é atribuída à propriedade senha do 
+	 *     objeto usuario, substituindo a senha original fornecida. Dessa forma, a senha armazenada no banco de dados é 
+	 *     atualizada com a senha criptografada fornecida pelo usuário.
+	 *     
+	 *     Em resumo, o código verifica se a senha fornecida pelo usuário é diferente da senha armazenada no banco de dados. 
+	 *     Se forem diferentes, a senha fornecida é criptografada usando o algoritmo BCrypt e substitui a senha original 
+	 *     armazenada no banco de dados. Isso pode ser útil para garantir que a senha seja atualizada corretamente no banco 
+	 *     de dados sempre que um usuário alterar sua senha. 
+	 * 
 	 * -> usuarioRepository é um objeto que realiza operações de acesso a dados relacionados aos usuários.
 	 * -> O método save(usuario) salva o objeto usuario no banco de dados. Neste caso, como estamos usando o método PUT 
 	 *    (atualização), o usuário fornecido substituirá o usuário existente com o mesmo ID no banco de dados.
@@ -187,6 +208,13 @@ public class IndexController {
 		
 		for (int pos = 0; pos < usuario.getTelefones().size(); pos++) {
 			usuario.getTelefones().get(pos).setUsuario(usuario);
+		}
+		
+		Usuario userTemporario = usuarioRepository.findUserByLogin(usuario.getLogin());
+		
+		if(!userTemporario.getSenha().equals(usuario.getSenha())) {
+			String senhaCriptografado = new BCryptPasswordEncoder().encode(usuario.getSenha());
+			usuario.setSenha(senhaCriptografado);
 		}
 		
 		Usuario usuarioAtualizar = usuarioRepository.save(usuario);

@@ -1214,7 +1214,7 @@ lembrando que o token criado é do respectivo id usuario que deseja deletar.
 A URL para testar no Postman: http://localhost:8080/projetospringrestapi/usuario/43
 
 
- < Para o método POST - no postman >
+ < Para o método POST e PUT - no postman >
  
  Para enviar dados do usuario, é o mesmo processo, não esquece do adicionar o token na Authorization (vc pega esse token na 
  aba HEADER) e depois faz o o json no body, por exemplo:
@@ -1224,9 +1224,54 @@ A URL para testar no Postman: http://localhost:8080/projetospringrestapi/usuario
  Ou 
  
  {
-        "id": "",
+        "id": 1,
         "login": "igor",
         "senha": "123",
         "nome": "Igor",
         "telefones": [{"id":"", "numero":"(21) 9347-9445"}, {"id":"", "numero":"(21) 8549-9534"}]
 }
+
+ < Para o método PUT - no postman >
+
+Para enviar dados do usuario, é o mesmo processo, não esquece do adicionar o token na Authorization (vc pega esse token na 
+ aba HEADER) e depois faz o o json no body, por exemplo:
+ 
+ {"login": "chris", "senha": "12345crhis","nome": "Chris"}
+ 
+ Ou 
+ 
+ {
+        "id": 1,
+        "login": "igor",
+        "senha": "123",
+        "nome": "Igor",
+        "telefones": [{"id":12, "numero":"(21) 9347-9445"}, {"id":13, "numero":"(21) 8549-9534"}]
+}
+-------------------------------------------------------- // ------------------------------------------------------------------
+OBS. Vamos tornar o login um valor unico, através do uso da anotação @Column(unique=true). Vale ressaltar que tem que apagar a coluna login no BD para que o JPA possa criar automaticamente 
+no BD.
+
+
+------------ // --------------
+A anotação @JsonIgnore é usada em Java para indicar que um determinado campo ou método de um objeto deve ser ignorado durante a serialização ou desserialização de objetos JSON. 
+Isso significa que o campo ou método decorado com @JsonIgnore não será incluído no JSON resultante ou não será considerado ao converter um JSON em um objeto Java.
+OBS. No postman é possível testar tal anotação.
+
+A anotação @JsonIgnore é comumente usada em situações em que você deseja excluir certas propriedades ou métodos do processo de serialização/desserialização JSON por motivos 
+como, por exemplo, propriedades sensíveis, ou seja, se você tiver informações confidenciais ou propriedades que não devem ser compartilhadas externamente, pode usar @JsonIgnore 
+para impedir que sejam incluídas no JSON, ou referências circulares que é quando você tem relacionamentos bidirecionais entre objetos, como um relacionamento entre pais e filhos, 
+pode ocorrer uma referência circular ao serializar os objetos em JSON. Isso pode levar a um loop infinito durante a serialização. Usando @JsonIgnore em um dos lados do 
+relacionamento, você pode evitar a referência circular., ou redução do tamanho do JSON, ou seja, se você tiver campos que não são relevantes para a saída JSON ou que ocupam 
+muito espaço, pode usar @JsonIgnore para excluí-los, reduzindo o tamanho do JSON resultante, ou para evitar problemas de recursão infinita, ou seja, Em algumas situações, como 
+quando você tem um objeto que contém uma referência a si mesmo, a serialização sem @JsonIgnore pode causar um erro de recursão infinita. Usar @JsonIgnore nesses casos pode ajudar 
+a evitar esse problema.
+
+É importante observar que a anotação @JsonIgnore é específica para bibliotecas de serialização/desserialização JSON, como Jackson, GSON ou JSON-B. Cada biblioteca pode ter sua 
+própria implementação da anotação @JsonIgnore, mas o objetivo geral é o mesmo: excluir campos ou métodos específicos do processo de serialização/desserialização JSON.
+
+
+
+
+
+
+

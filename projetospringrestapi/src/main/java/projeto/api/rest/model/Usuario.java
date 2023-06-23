@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Objects;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.ConstraintMode;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -21,6 +22,8 @@ import javax.persistence.UniqueConstraint;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class Usuario implements UserDetails {
 
@@ -30,6 +33,7 @@ public class Usuario implements UserDetails {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 
+	@Column(unique = true)
 	private String login;
 	private String senha;
 	private String nome;
@@ -141,6 +145,7 @@ public class Usuario implements UserDetails {
 	}
 
 	// Retorna a senha do usuário.
+	@JsonIgnore
 	@Override
 	public String getPassword() {
 		
@@ -148,6 +153,7 @@ public class Usuario implements UserDetails {
 	}
 
 	// Retorna o nome de usuário do usuário
+	@JsonIgnore
 	@Override
 	public String getUsername() {
 		
@@ -155,6 +161,7 @@ public class Usuario implements UserDetails {
 	}
 
 	// Verifica se a conta do usuário não está expirada.
+	@JsonIgnore
 	@Override
 	public boolean isAccountNonExpired() {
 		
@@ -162,6 +169,7 @@ public class Usuario implements UserDetails {
 	}
 
 	// Verifica se a conta do usuário não está bloqueada.
+	@JsonIgnore
 	@Override
 	public boolean isAccountNonLocked() {
 		
@@ -169,6 +177,7 @@ public class Usuario implements UserDetails {
 	}
 
 	// Verifica se as credenciais do usuário não estão expiradas.
+	@JsonIgnore
 	@Override
 	public boolean isCredentialsNonExpired() {
 		
@@ -176,6 +185,7 @@ public class Usuario implements UserDetails {
 	}
 
 	// Verifica se a conta do usuário está habilitada
+	@JsonIgnore
 	@Override
 	public boolean isEnabled() {
 		

@@ -1300,3 +1300,162 @@ podem ter clareza sobre as alterações e atualizações em cada versão da API,
 
 OBS. Para testar o versionamento pelo headers no postman, tem que ir na aba HEADERS e add "X-API-Version" como chave e "v1" como valor.
 
+
+-------------------------------------------------------- // ------------------------------------------------------------------
+
+Um pool de conexão (connection pool) é uma técnica utilizada em programação para melhorar o desempenho e a eficiência na comunicação com um banco de dados ou outros sistemas que 
+exigem conexões de rede. Em vez de abrir e fechar uma conexão com o banco de dados para cada solicitação, um pool de conexão mantém um conjunto de conexões pré-estabelecidas, 
+prontas para uso.
+
+Quando um aplicativo precisa se conectar ao banco de dados, em vez de criar uma nova conexão, ele solicita uma conexão disponível a partir do pool. Se houver uma conexão livre, 
+ela será atribuída ao aplicativo. Caso contrário, o aplicativo aguardará até que uma conexão fique disponível no pool. Quando o aplicativo termina de usar a conexão, ela é 
+devolvida ao pool em vez de ser fechada.
+
+Os principais benefícios do uso de um pool de conexão são:
+
+1. Melhor desempenho: Manter conexões abertas e reutilizá-las reduz o tempo necessário para estabelecer uma nova conexão a cada solicitação. Isso resulta em tempos de resposta 
+                      mais rápidos e melhora o desempenho geral do sistema.
+
+2. Maior escalabilidade: Um pool de conexão permite que várias solicitações sejam processadas simultaneamente, utilizando conexões disponíveis. Isso melhora a capacidade de 
+                         lidar com um grande número de solicitações concorrentes sem sobrecarregar o banco de dados.
+
+3. Controle de recursos: Um pool de conexão pode controlar a quantidade máxima de conexões que podem ser abertas simultaneamente. Isso evita a abertura excessiva de conexões, o 
+                         que pode levar a problemas de recursos e desempenho.
+
+4. Gerenciamento de conexões: O pool de conexão é responsável por gerenciar as conexões, como abrir, fechar, testar a validade e garantir que estejam em um estado adequado antes 
+                              de serem atribuídas ao aplicativo.
+
+5. Reutilização de conexões: Ao reutilizar as conexões existentes, o pool de conexão reduz a sobrecarga do banco de dados causada pelo processo de estabelecimento de conexões 
+                             repetidas.
+
+Em resumo, um pool de conexão é um mecanismo de gerenciamento de conexões que mantém um conjunto de conexões pré-estabelecidas para permitir a reutilização e o compartilhamento 
+eficiente de conexões entre um aplicativo e um banco de dados ou outro sistema. Isso melhora o desempenho, a escalabilidade e o controle de recursos, resultando em um sistema 
+mais eficiente e responsivo.
+
+---------------- // ----------------
+
+Vamos utilizar o Hikari é responsável por gerenciar esse fluxo de de conexão, então ele cria várias conexões que vai ser configurado e fica ali esperando e quando as requisições
+chegam automaticamente já salva garantindo a perfomence do sistema. 
+
+O HikariCP é uma biblioteca de gerenciamento de pool de conexão de alto desempenho e altamente confiável. Ele oferece uma implementação eficiente e leve, projetada para ser 
+rápida e escalável. O HikariCP foi desenvolvido para atender às demandas modernas de aplicativos que precisam se conectar a bancos de dados de forma eficiente.
+
+Algumas das características e benefícios do HikariCP incluem:
+
+Alta performance: O HikariCP é conhecido por ser extremamente rápido e eficiente em termos de desempenho. Ele utiliza uma série de técnicas de otimização para minimizar o tempo 
+                  de criação de conexões, reduzir a sobrecarga e melhorar a latência.
+
+Configuração simplificada: O HikariCP oferece uma API simples e fácil de usar para configurar o pool de conexão. A maioria das configurações tem valores padrão sensíveis, 
+                           permitindo uma inicialização rápida e fácil.
+
+Monitoramento e estatísticas: O HikariCP fornece métricas e estatísticas detalhadas sobre o pool de conexão, permitindo que você monitore e ajuste o desempenho do seu aplicativo.
+
+Recuperação de falhas: O HikariCP inclui recursos de recuperação de falhas, como a detecção de conexões inativas e a remoção automática de conexões quebradas ou inutilizáveis. 
+                       Isso ajuda a manter a estabilidade do aplicativo, lidando com falhas de conexão de forma adequada.
+
+Baixo consumo de recursos: O HikariCP é projetado para ser leve e consumir poucos recursos, o que é importante para a escalabilidade e o desempenho geral do aplicativo.
+
+O HikariCP é amplamente utilizado em aplicativos Java e é compatível com vários frameworks e bibliotecas populares, como Spring, Hibernate e JDBC. Sua popularidade se deve à 
+sua alta performance, facilidade de uso e configuração, além de ser uma alternativa eficiente aos pools de conexão tradicionais.
+
+---------------- // ----------------
+
+Explicando as propriedades do HikariPC no application.properties:
+
+ -> spring.datasource.hikari.connection-timeout
+    A propriedade "spring.datasource.hikari.connection-timeout" é uma configuração relacionada ao HikariCP, um pool de conexão para o Spring Framework.
+
+    Essa propriedade define o tempo máximo, em milissegundos, que o HikariCP aguardará para obter uma nova conexão do banco de dados. Se o tempo limite for atingido e não houver 
+    conexões disponíveis, ocorrerá uma exceção.
+
+    No exemplo fornecido, "spring.datasource.hikari.connection-timeout = 20000", o valor é definido como 20000 milissegundos, ou seja, 20 segundos. Isso significa que o HikariCP 
+    aguardará no máximo 20 segundos para obter uma nova conexão antes de lançar uma exceção.
+    
+    Essa configuração é útil para controlar o tempo máximo que um aplicativo espera para estabelecer uma conexão com o banco de dados. Se o tempo limite for muito curto e o 
+    banco de dados estiver ocupado ou a conexão estiver lenta, pode ser necessário aumentar esse valor para evitar exceções desnecessárias. Por outro lado, se o tempo limite for 
+    muito longo, pode levar mais tempo para identificar problemas de conexão.
+    
+    Ajustar adequadamente o valor de "connection-timeout" depende do ambiente, do tempo de resposta esperado do banco de dados e da tolerância a atrasos no aplicativo. 
+    Recomenda-se ajustar essa configuração com base nas necessidades específicas do seu aplicativo e no comportamento do banco de dados.
+    
+    
+ -> spring.datasource.hikari.minimum-idle
+    A propriedade "spring.datasource.hikari.minimum-idle" é uma configuração relacionada ao HikariCP, um pool de conexão para o Spring Framework.
+    
+    Essa propriedade define o número mínimo de conexões ociosas (idle) que o HikariCP deve manter no pool. Conexões ociosas são conexões que não estão sendo usadas no momento, 
+    mas estão disponíveis para serem reutilizadas por outras solicitações de conexão.
+    
+    No exemplo fornecido, "spring.datasource.hikari.minimum-idle = 10", o valor é definido como 10. Isso significa que o HikariCP tentará manter pelo menos 10 conexões ociosas 
+    no pool, mesmo que não estejam sendo usadas no momento. Essas conexões ociosas estão prontas para serem utilizadas quando necessário, evitando assim o tempo de criação de uma 
+    nova conexão.
+    
+    Manter um número mínimo de conexões ociosas pode ser útil para melhorar o desempenho do aplicativo, especialmente em cenários de carga variável. Ao manter um conjunto de 
+    conexões prontas, o aplicativo pode responder rapidamente a picos de demanda de conexão sem esperar pela criação de novas conexões.
+    
+    No entanto, é importante equilibrar o número mínimo de conexões ociosas com o consumo de recursos. Manter um número excessivo de conexões ociosas pode consumir recursos de 
+    forma desnecessária, especialmente se o aplicativo não apresentar um volume alto e constante de solicitações de conexão.
+    
+    Ajustar adequadamente o valor de "minimum-idle" depende das necessidades específicas do aplicativo, como o padrão de uso de conexões e a carga esperada do sistema. 
+    Recomenda-se ajustar essa configuração com base na análise de desempenho e monitoramento do uso de conexões no ambiente de execução real.
+    
+    
+  -> spring.datasource.hikari.maximum-pool-size
+  A propriedade "spring.datasource.hikari.maximum-pool-size" é uma configuração relacionada ao HikariCP, um pool de conexão para o Spring Framework.
+  
+  Essa propriedade define o tamanho máximo do pool de conexão do HikariCP, ou seja, o número máximo de conexões que o pool pode manter simultaneamente. O valor especificado 
+  define a capacidade máxima do pool.
+  
+  No exemplo fornecido, "spring.datasource.hikari.maximum-pool-size = 40", o valor é definido como 40. Isso significa que o HikariCP pode manter no máximo 40 conexões simultâneas 
+  no pool.
+  
+  O tamanho máximo do pool de conexão é importante para controlar a quantidade de recursos, como conexões de banco de dados, que o aplicativo pode utilizar. Ao atingir o tamanho 
+  máximo do pool, novas solicitações de conexão podem ser colocadas em espera até que uma conexão esteja disponível ou pode ocorrer uma exceção, dependendo da configuração.
+  
+  É importante ajustar adequadamente o tamanho máximo do pool de acordo com a capacidade do banco de dados e as demandas do aplicativo. Um valor muito baixo pode limitar o número 
+  de conexões disponíveis e afetar negativamente o desempenho do aplicativo em momentos de carga elevada. Por outro lado, um valor muito alto pode consumir recursos excessivos do 
+  sistema, como memória e conexões do banco de dados, sem trazer benefícios significativos.
+  
+  Recomenda-se analisar o comportamento do aplicativo, a carga esperada e as capacidades do banco de dados para determinar o tamanho máximo adequado do pool de conexão. É 
+  importante realizar testes de desempenho e monitorar o uso de conexões em tempo real para otimizar essa configuração.
+  
+  
+   -> spring.datasource.hikari.idle-timeout
+   A propriedade "spring.datasource.hikari.idle-timeout" é uma configuração relacionada ao HikariCP, um pool de conexão para o Spring Framework.
+   
+   Essa propriedade define o tempo máximo de inatividade (idle) permitido para uma conexão antes que ela seja fechada e removida do pool. Uma conexão é considerada inativa quando 
+   não é usada por um determinado período de tempo.
+   
+   No exemplo fornecido, "spring.datasource.hikari.idle-timeout = 10000", o valor é definido como 10000 milissegundos, ou seja, 10 segundos. Isso significa que uma conexão ociosa 
+   que não é usada por 10 segundos será fechada e removida do pool.
+   
+   A definição de um tempo de inatividade pode ser útil para liberar recursos e evitar o acúmulo de conexões ociosas no pool. Quando uma conexão é fechada, os recursos associados 
+   a ela são liberados, reduzindo o consumo de memória e outros recursos do sistema.
+   
+   É importante ajustar adequadamente o tempo de inatividade com base no padrão de uso de conexões do aplicativo e nas características do banco de dados. Um valor muito baixo 
+   pode resultar no fechamento prematuro de conexões ativas, o que pode afetar negativamente o desempenho do aplicativo. Por outro lado, um valor muito alto pode levar ao acúmulo 
+   de conexões ociosas e consumir recursos desnecessários.
+   
+   Recomenda-se analisar o comportamento do aplicativo, o tempo médio de inatividade das conexões e as características do ambiente de execução para determinar o valor adequado 
+   para a propriedade "idle-timeout". O monitoramento contínuo do uso de conexões e a análise de desempenho também são importantes para otimizar essa configuração.
+   
+   
+    -> spring.datasource.hikari.auto-commit
+    A propriedade "spring.datasource.hikari.auto-commit" é uma configuração relacionada ao HikariCP, um pool de conexão para o Spring Framework.
+    
+    Essa propriedade define se as transações executadas no banco de dados devem ser confirmadas automaticamente (auto-commit) após cada instrução SQL ou se devem ser gerenciadas 
+    manualmente pelo aplicativo.
+    
+    No exemplo fornecido, "spring.datasource.hikari.auto-commit = true", o valor é definido como true, o que indica que o auto-commit está ativado. Isso significa que cada 
+    instrução SQL executada será automaticamente confirmada (commit) no banco de dados. Essa configuração é útil em cenários onde transações individuais não são necessárias ou 
+    não são gerenciadas explicitamente pelo aplicativo.
+    
+    Por outro lado, se "spring.datasource.hikari.auto-commit" for definido como false, o auto-commit estará desativado. Nesse caso, as transações não serão confirmadas 
+    automaticamente e o aplicativo precisará gerenciar explicitamente o início, o commit e o rollback das transações.
+    
+    A escolha de usar auto-commit ou não depende dos requisitos do aplicativo e do padrão de uso do banco de dados. Se o aplicativo não requer controle granular de transações ou 
+    não precisa desfazer várias instruções SQL em caso de falha, o auto-commit pode ser adequado e simplificar a lógica do aplicativo. No entanto, se o aplicativo requer 
+    controle transacional mais sofisticado, como atomicidade ou isolamento de transações, é preferível desativar o auto-commit e gerenciar as transações manualmente.
+    
+    Recomenda-se avaliar as necessidades do aplicativo em termos de transações e escolher a configuração mais apropriada para "auto-commit" com base nos requisitos de negócio e 
+    nas funcionalidades oferecidas pelo banco de dados. 
+ 

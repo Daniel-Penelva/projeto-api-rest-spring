@@ -51,7 +51,7 @@
 		</dependency>
 
 		<!-- Dependência banco de dados postgresql -->
-		
+
 		<!--
 		<dependency>
 			<groupId>org.postgresql</groupId>
@@ -59,13 +59,13 @@
 			<version>42.1.3</version>
 		</dependency>
         -->
-		
+
 		<dependency>
 			<groupId>org.postgresql</groupId>
 			<artifactId>postgresql</artifactId>
 			<version>9.2-1003-jdbc4</version>
 		</dependency>
-    
+
 
 		<!-- Dependência devtools -->
 		<dependency>
@@ -73,28 +73,36 @@
 			<artifactId>spring-boot-devtools</artifactId>
 			<scope>runtime</scope>
 		</dependency>
-		
+
 		<!-- Dependência do Spring Security -->
 		<dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-web</artifactId>
 			<version>5.0.7.RELEASE</version>
 		</dependency>
-		
+
 		<!-- Dependência para Web Config Security -->
 		<dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-config</artifactId>
 			<version>5.0.7.RELEASE</version>
 		</dependency>
-		
+
 		<!-- Dependência para geração de token -->
 		<dependency>
 			<groupId>io.jsonwebtoken</groupId>
 			<artifactId>jjwt</artifactId>
 			<version>0.7.0</version>
 		</dependency>
-		
+
+		<!-- Pool de conexão - https://mvnrepository.com/artifact/com.zaxxer/HikariCP -->
+		<dependency>
+			<groupId>com.zaxxer</groupId>
+			<artifactId>HikariCP</artifactId>
+			<version>3.3.1</version>
+		</dependency>
+
+
 	</dependencies>
 
 	<build>

@@ -50,11 +50,21 @@ public class IndexController {
 	 * usuário (usuarioRepository) e retorna uma resposta JSON contendo o usuário encontrado, com o status HTTP 200 (OK).
 	 * */
 	
-	@GetMapping(value = "/{id}", produces = "application/json")
-	public ResponseEntity<Usuario> init(@PathVariable(value = "id") Long id) {
+	@GetMapping(value = "v1/{id}", produces = "application/json")
+	public ResponseEntity<Usuario> initV1(@PathVariable(value = "id") Long id) {
 
 		Optional<Usuario> usuario = usuarioRepository.findById(id);
+		System.out.println("Executando versão 1");
+		return new ResponseEntity<Usuario>(usuario.get(), HttpStatus.OK); 
+	}
+	
+	
+	// versionamento de API
+	@GetMapping(value = "v2/{id}", produces = "application/json")
+	public ResponseEntity<Usuario> initV2(@PathVariable(value = "id") Long id) {
 
+		Optional<Usuario> usuario = usuarioRepository.findById(id);
+		System.out.println("Executando versão 2");
 		return new ResponseEntity<Usuario>(usuario.get(), HttpStatus.OK); 
 	}
 

@@ -1270,8 +1270,32 @@ a evitar esse problema.
 própria implementação da anotação @JsonIgnore, mas o objetivo geral é o mesmo: excluir campos ou métodos específicos do processo de serialização/desserialização JSON.
 
 
+-------------------------------------------------------- // ------------------------------------------------------------------
 
+O versionamento de API é o processo de atribuir uma versão específica a uma interface de programação de aplicativo (API) para permitir o controle e a evolução independentes das 
+alterações na API ao longo do tempo. Ele é usado para gerenciar as mudanças na API de forma a minimizar o impacto nas aplicações cliente que dependem dela.
 
+Quando uma API é lançada pela primeira vez, pode-se atribuir uma versão inicial, como v1 (versão 1). Conforme as necessidades evoluem e as mudanças são feitas na API, é possível 
+criar versões posteriores, como v2 (versão 2), v3 (versão 3) e assim por diante. Cada versão representa um conjunto específico de recursos, comportamentos e estrutura da API.
+
+Existem várias abordagens comuns para o versionamento de API:
+
+1. Versionamento baseado em URL: Nessa abordagem, a versão é incorporada na URL da API. Por exemplo, a API v1 pode ter uma URL como "/api/v1/endpoint". Essa abordagem permite que 
+                                 as diferentes versões da API coexistam separadamente.
+
+2. Versionamento baseado em cabeçalho ou parâmetro: Nesse caso, a versão é fornecida como um cabeçalho HTTP personalizado ou como um parâmetro na chamada da API. Por exemplo, 
+                                                    pode-se ter um cabeçalho "API-Version: 1" ou um parâmetro "?version=1" para especificar a versão desejada.
+
+3. Versionamento baseado em mídia (media-type): Nessa abordagem, a versão é indicada por meio do tipo de mídia (media-type) na solicitação HTTP. Por exemplo, pode-se ter 
+                                                "application/vnd.company.api-v1+json" para a versão 1 da API. Essa abordagem permite que as diferentes versões da API sejam 
+                                                diferenciadas com base no tipo de mídia.
+
+O versionamento de API é importante para garantir a compatibilidade entre os clientes que consomem a API e as alterações feitas nela. Ele permite que as atualizações e melhorias 
+sejam feitas na API sem interromper os clientes existentes. Ao usar a versão apropriada da API, os clientes podem continuar a funcionar conforme o esperado, enquanto novos 
+recursos podem ser introduzidos em versões posteriores da API.
+
+Além disso, o versionamento de API também facilita a comunicação e a colaboração entre os desenvolvedores da API e os desenvolvedores de aplicações cliente. Os desenvolvedores 
+podem ter clareza sobre as alterações e atualizações em cada versão da API, facilitando a adoção e a integração em suas aplicações.
 
 
 

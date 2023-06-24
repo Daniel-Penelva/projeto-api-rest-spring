@@ -1298,4 +1298,5 @@ Além disso, o versionamento de API também facilita a comunicação e a colabor
 podem ter clareza sobre as alterações e atualizações em cada versão da API, facilitando a adoção e a integração em suas aplicações.
 
 
+OBS. Para testar o versionamento pelo headers no postman, tem que ir na aba HEADERS e add "X-API-Version" como chave e "v1" como valor.
 

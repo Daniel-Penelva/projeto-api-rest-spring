@@ -1549,6 +1549,55 @@ a senha do `usuario` e as autoridades (papéis) associadas ao `usuario`. Esse ob
 Em resumo, o script verifica se o `usuario` não é nulo e, em seguida, compara o token fornecido (após remoção de espaços e conversão para minúsculas) com o token armazenado no 
 objeto `usuario`. Se os tokens forem iguais, é criado um objeto `UsernamePasswordAuthenticationToken` com as informações do `usuario` e retornado como resultado da validação.	
 
-		
+
+-------------------------------------------------------- // ------------------------------------------------------------------
+
+CORS (Cross-Origin Resource Sharing) refere-se à política de segurança implementada pelos navegadores da web para controlar as solicitações de recursos feitas entre diferentes 
+origens (ou seja, domínios, portas ou protocolos diferentes). É uma medida de segurança que restringe as solicitações feitas a partir de scripts em uma página da web para acessar 
+recursos de uma origem diferente.
+
+Ao fazer uma solicitação cross-origin, o navegador verifica se o servidor de destino permite explicitamente a solicitação, verificando os cabeçalhos CORS na resposta do servidor. 
+Esses cabeçalhos determinam quais origens, métodos HTTP, cabeçalhos personalizados e tipos de solicitação são permitidos.
+
+A liberação de CORS envolve a configuração adequada dos cabeçalhos de resposta no servidor para permitir que as solicitações cross-origin sejam aceitas. Os principais cabeçalhos 
+CORS são:
+
+1. Access-Control-Allow-Origin: Especifica as origens (domínios) permitidos a acessar o recurso. Pode ser definido como "*" para permitir qualquer origem, ou pode ser configurado 
+                                para um domínio específico.
+
+2. Access-Control-Allow-Headers: Define quais cabeçalhos personalizados são permitidos na solicitação.
+
+3. Access-Control-Allow-Methods: Especifica quais métodos HTTP são permitidos na solicitação, como GET, POST, PUT, DELETE, etc.
+
+4. Access-Control-Request-Headers: Indica quais cabeçalhos personalizados estão sendo solicitados pelo cliente na pré-viagem (requisição OPTIONS) antes da solicitação real.
+
+Ao configurar esses cabeçalhos no servidor, é possível controlar quais origens podem acessar recursos específicos, quais cabeçalhos personalizados podem ser enviados, quais 
+métodos HTTP são permitidos e quais cabeçalhos são solicitados durante a pré-viagem.
+
+Permitir esses cabeçalhos em uma resposta CORS significa que o servidor está declarando explicitamente que essas interações cross-origin são permitidas, removendo as restrições 
+padrão impostas pelos navegadores. Isso permite que aplicativos web acessem recursos em diferentes origens de forma controlada e segura, facilitando a comunicação entre domínios 
+diferentes.
+
+------------------ // -----------------
+O método chamado `liberacaoCors` que configura os cabeçalhos de resposta para permitir o acesso CORS (Cross-Origin Resource Sharing).
+
+Explicação linha por linha:
+
+1. `private void liberacaoCors(HttpServletResponse response)`: Declaração de um método privado chamado `liberacaoCors` que recebe um objeto `HttpServletResponse` como parâmetro. 
+                                                               O `HttpServletResponse` é usado para manipular a resposta HTTP enviada ao cliente.
+
+2. `if(response.getHeader("Access-Control-Allow-Origin") == null)`: Verifica se o cabeçalho de resposta "Access-Control-Allow-Origin" não está definido. Esse cabeçalho indica 
+                                                                    quais origens (domínios) podem acessar os recursos do servidor. Se o cabeçalho não estiver definido, o bloco 
+                                                                    de código dentro do `if` será executado.
+
+3. `response.addHeader("Access-Control-Allow-Origin", "*")`: Adiciona o cabeçalho "Access-Control-Allow-Origin" à resposta com o valor "*", permitindo que qualquer origem acesse 
+                                                             os recursos do servidor. O asterisco "*" indica que qualquer origem é permitida.
+
+4. Os passos 2 e 3 são repetidos para os seguintes cabeçalhos de resposta: "Access-Control-Allow-Headers", "Access-Control-Request-Headers" e "Access-Control-Allow-Methods". 
+Esses cabeçalhos são usados para permitir os cabeçalhos personalizados enviados na requisição e os métodos HTTP permitidos para acesso aos recursos do servidor.
+
+Em resumo, o método `liberacaoCors` é responsável por adicionar os cabeçalhos de resposta necessários para permitir o acesso CORS no objeto `HttpServletResponse`. Isso é feito 
+verificando se os cabeçalhos já estão definidos e, se não estiverem, adicionando-os com valores adequados. Essa configuração permite que recursos do servidor sejam acessados por 
+origens (domínios) diferentes, facilitando a comunicação entre domínios diferentes por meio de requisições HTTP.		
 					
  

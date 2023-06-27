@@ -73,15 +73,17 @@ public class JWTTokenAutenticacaoService {
 		
 		if(token != null) {
 			
+			String tokenLimpo = token.replace(TOKEN_PREFIX, "").trim();
+			
 				/* Faz a validação do token do usuário na requisição - entender o processo:
-				 * linha 78 - o token chega da seguinte maneira: (Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9) 
-				 * linha 79 - vai ficar assim: (eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9)
-				 * linha 80 - retorna só o usuário, ficaria assim: Daniel Penelva
+				 * linha 85 - o token chega da seguinte maneira: (Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9) 
+				 * linha 86 - vai ficar assim: (eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9)
+				 * linha 87 - retorna só o usuário, ficaria assim: Daniel Penelva
 				 * */
 				
 				String user = Jwts.parser()
 						.setSigningKey(SECRET)
-						.parseClaimsJws(token.replace(TOKEN_PREFIX, ""))
+						.parseClaimsJws(tokenLimpo)
 						.getBody().getSubject();
 				
 				
@@ -100,7 +102,12 @@ public class JWTTokenAutenticacaoService {
 					
 					if(usuario != null) {
 						
-						return new UsernamePasswordAuthenticationToken(usuario.getLogin(), usuario.getSenha(), usuario.getAuthorities());
+						// Se o token cadastrado no BD for igual ao que veio da requisição, vai ser validado.
+						if(tokenLimpo.equalsIgnoreCase(usuario.getToken())) {
+						
+							return new UsernamePasswordAuthenticationToken(usuario.getLogin(), usuario.getSenha(), usuario.getAuthorities());
+						
+						} // if 4
 						
 					} //if 3
 					

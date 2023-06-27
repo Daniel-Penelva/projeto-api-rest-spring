@@ -74,6 +74,8 @@ public class Usuario implements UserDetails {
 			)
 	)
 	private List<Role> roles;
+	
+	private String token = "";
 
 	
 	// Getters e setters
@@ -115,6 +117,14 @@ public class Usuario implements UserDetails {
 
 	public void setTelefones(List<Telefone> telefones) {
 		this.telefones = telefones;
+	}
+	
+	public void setToken(String token) {
+		this.token = token;
+	}
+	
+	public String getToken() {
+		return token;
 	}
 
 	

@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -51,6 +52,7 @@ public class IndexController {
 	 * */
 	
 	@GetMapping(value = "/{id}", produces = "application/json")
+	@Cacheable("cacheusuarioid")
 	public ResponseEntity<Usuario> initV1(@PathVariable(value = "id") Long id) {
 
 		Optional<Usuario> usuario = usuarioRepository.findById(id);
@@ -71,6 +73,7 @@ public class IndexController {
     */
 	
 	/** No código abaixo vai ser consultado uma lista de usuários -http://localhost:8080/usuario/ 
+	 * @throws InterruptedException 
 	 * @GetMapping(value = "/", produces = "application/json"):
 	 *  -> A anotação @GetMapping indica que este método é acionado quando há uma requisição HTTP GET para a URL especificada.
 	 *  -> value = "/" define a URL do endpoint como a raiz, ou seja, o caminho base da API.
@@ -91,10 +94,16 @@ public class IndexController {
 	 * usuários encontrados, com o status HTTP 200 (OK). Esse endpoint é útil para obter uma lista completa de usuários 
 	 * através da API.
 	 * */ 
+	
+	/* Vamos supor que o carregamento do usuário seja um processo lento e que queremos controlar ele com a cache 
+	 * para agilizar o processo. */
 	@GetMapping(value = "/", produces = "application/json")
-	public ResponseEntity<List<Usuario>> listaUsuario() {
+	@Cacheable("cacheusuarios")
+	public ResponseEntity<List<Usuario>> listaUsuario() throws InterruptedException {
 
 		List<Usuario> listUsu = (List<Usuario>) usuarioRepository.findAll();
+		
+		Thread.sleep(6000); // Segura o código por 6 segundos simulando um processo lento.
 
 		return new ResponseEntity<List<Usuario>>(listUsu, HttpStatus.OK); 
 	}

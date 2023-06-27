@@ -95,11 +95,19 @@
 			<version>0.7.0</version>
 		</dependency>
 
-		<!-- Pool de conexão - https://mvnrepository.com/artifact/com.zaxxer/HikariCP -->
+		<!-- Pool de conexão -
+		https://mvnrepository.com/artifact/com.zaxxer/HikariCP -->
 		<dependency>
 			<groupId>com.zaxxer</groupId>
 			<artifactId>HikariCP</artifactId>
 			<version>3.3.1</version>
+		</dependency>
+
+		<!--
+		https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-cache -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-cache</artifactId>
 		</dependency>
 
 

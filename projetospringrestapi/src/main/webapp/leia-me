@@ -1458,4 +1458,47 @@ Explicando as propriedades do HikariPC no application.properties:
     
     Recomenda-se avaliar as necessidades do aplicativo em termos de transações e escolher a configuração mais apropriada para "auto-commit" com base nos requisitos de negócio e 
     nas funcionalidades oferecidas pelo banco de dados. 
+    
+-------------------------------------------------------- // ------------------------------------------------------------------
+    
+A anotação `@CacheEvict` é usada no Spring Framework para indicar que um método deve ser responsável por invalidar (limpar) um ou mais itens em um cache. Essa anotação é usada 
+em conjunto com a funcionalidade de cache do Spring para controlar o armazenamento em cache de determinados dados ou resultados de métodos.
+
+Quando aplicada a um método, a anotação `@CacheEvict` instrui o Spring a limpar (evict) um ou mais itens do cache após a execução desse método. Isso é útil quando há uma 
+alteração nos dados ou quando se deseja forçar a atualização do cache.
+
+A anotação `@CacheEvict` possui vários atributos que podem ser usados para especificar o cache ou os itens específicos que devem ser limpos. Alguns dos atributos comuns incluem:
+
+- `value` (ou `cacheNames`): especifica o nome do cache que deve ser limpo.
+- `key` (ou `keyGenerator`): especifica a chave ou o gerador de chave para identificar o item específico no cache que deve ser limpo.
+- `allEntries`: um valor booleano que indica se todos os itens no cache devem ser limpos, independentemente da chave. O valor padrão é `false`.
+- `beforeInvocation`: um valor booleano que indica se a limpeza do cache deve ocorrer antes (true) ou após (false) a execução do método. O valor padrão é `false`.
+
+Ao marcar um método com `@CacheEvict`, o Spring interceptará a chamada desse método e executará a lógica de limpeza do cache conforme especificado na anotação.
+
+Em resumo, a anotação `@CacheEvict` é usada para invalidar itens em um cache após a execução de um determinado método, permitindo que dados atualizados sejam armazenados em 
+cache ou que o cache seja atualizado quando necessário.
+
+---------------- // -------------------
+
+A anotação `@CachePut` é usada no Spring Framework para indicar que o resultado de um método deve ser armazenado em cache (ou seja identifica que há atualização e vai colocar no
+cache). Essa anotação é usada em conjunto com a funcionalidade 
+de cache do Spring para controlar o armazenamento em cache de determinados dados ou resultados de métodos.
+
+Quando aplicada a um método, a anotação `@CachePut` instrui o Spring a armazenar em cache o resultado desse método, associando-o a uma chave específica. Se a chave já existir 
+no cache, o valor associado a ela será atualizado.
+
+A anotação `@CachePut` possui vários atributos que podem ser usados para especificar o cache ou a chave específica que deve ser usada para armazenar o resultado em cache. Alguns 
+dos atributos comuns incluem:
+
+- `value` (ou `cacheNames`): especifica o nome do cache onde o resultado deve ser armazenado.
+- `key` (ou `keyGenerator`): especifica a chave ou o gerador de chave para identificar o item específico no cache.
+- `unless`: uma expressão SpEL (Spring Expression Language) que indica uma condição para determinar se o resultado deve ser armazenado em cache ou não.
+
+Ao marcar um método com `@CachePut`, o Spring interceptará a chamada desse método e armazenará o resultado retornado em cache, associando-o à chave especificada. Isso permite que 
+o resultado seja recuperado do cache nas chamadas subsequentes, evitando a execução desnecessária do método.
+
+Em resumo, a anotação `@CachePut` é usada para armazenar em cache o resultado de um método, permitindo que o resultado seja recuperado do cache em chamadas futuras, em vez de 
+executar o método novamente. Isso pode melhorar o desempenho e reduzir a carga do sistema, especialmente em métodos que são computacionalmente intensivos ou que acessam recursos 
+externos demorados.
  

@@ -1600,4 +1600,112 @@ Em resumo, o método `liberacaoCors` é responsável por adicionar os cabeçalho
 verificando se os cabeçalhos já estão definidos e, se não estiverem, adicionando-os com valores adequados. Essa configuração permite que recursos do servidor sejam acessados por 
 origens (domínios) diferentes, facilitando a comunicação entre domínios diferentes por meio de requisições HTTP.		
 					
+ -------------------------------------------------------- // ------------------------------------------------------------------
  
+ A classe `ResponseEntityExceptionHandler` é uma classe fornecida pelo Spring Framework que serve como um manipulador de exceções global para aplicativos web. Ela lida com 
+ exceções lançadas durante o processamento de solicitações HTTP e fornece respostas de erro adequadas ao cliente.
+
+A `ResponseEntityExceptionHandler` é uma classe abstrata que pode ser estendida para personalizar o tratamento de exceções em um aplicativo. Ela possui métodos para tratar 
+diferentes tipos de exceções, como exceções de validação, exceções de manipulação de dados, exceções de autenticação, entre outras.
+
+Quando uma exceção é lançada durante o processamento de uma solicitação, o Spring Framework busca o método apropriado na classe `ResponseEntityExceptionHandler` para lidar com 
+essa exceção com base no tipo da exceção. O método correspondente é executado e retorna um objeto `ResponseEntity` contendo informações de resposta de erro apropriadas, como 
+código de status HTTP, cabeçalhos e corpo da resposta.
+
+Os métodos na classe `ResponseEntityExceptionHandler` podem ser anotados com a anotação `@ExceptionHandler` para indicar quais tipos de exceção eles podem tratar. O Spring 
+Framework selecionará automaticamente o método correto com base no tipo de exceção lançada.
+
+Ao estender a classe `ResponseEntityExceptionHandler`, é possível personalizar o comportamento de tratamento de exceções, definindo como as respostas de erro devem ser 
+construídas e retornadas ao cliente. Isso permite uma manipulação centralizada e consistente de exceções em todo o aplicativo, simplificando o código e melhorando a manutenção 
+e a legibilidade.
+
+------------- // ----------------
+
+A anotação `@RestControllerAdvice` é usada no Spring Framework para criar um componente global que trata exceções em aplicativos RESTful. É uma combinação das anotações 
+`@ControllerAdvice` e `@ResponseBody`, o que significa que ele fornece o tratamento centralizado de exceções e retorna uma resposta adequada no formato JSON.
+
+Quando uma exceção é lançada durante o processamento de uma solicitação em um controlador REST, o `@RestControllerAdvice` é acionado para lidar com essa exceção. Ele permite 
+que você defina métodos anotados com `@ExceptionHandler` para tratar exceções específicas ou globais.
+
+A principal finalidade do `@RestControllerAdvice` é fornecer uma maneira centralizada de lidar com exceções em todo o aplicativo RESTful. Isso significa que você pode ter um 
+componente único que trata todas as exceções lançadas por controladores REST em vez de espalhar o tratamento de exceções em vários controladores.
+
+Além disso, o `@RestControllerAdvice` permite que você retorne respostas de erro formatadas em JSON, tornando mais fácil para os clientes consumirem essas respostas e entenderem 
+o motivo da falha. Ele converte automaticamente os objetos retornados pelos métodos anotados com `@ExceptionHandler` em uma resposta JSON e configura o cabeçalho `Content-Type` 
+para `application/json`.
+
+Em resumo, o `@RestControllerAdvice` é usado para capturar e tratar exceções em aplicativos RESTful, fornecendo uma solução centralizada para o tratamento de erros e a resposta 
+formatada em JSON. Isso ajuda a melhorar a consistência, a legibilidade e a manutenção do código ao lidar com exceções em serviços REST.
+
+------------- // ----------------
+
+A anotação `@ControllerAdvice` é usada no Spring Framework para criar um componente global que fornece recursos de tratamento de exceções, vinculação de dados e outras 
+configurações para controladores. É uma anotação poderosa que permite centralizar a lógica comum em um único local, em vez de espalhá-la por vários controladores.
+
+A principal finalidade do `@ControllerAdvice` é fornecer um mecanismo centralizado para lidar com exceções lançadas por controladores em um aplicativo. Isso significa que você 
+pode ter um componente único que trata exceções de vários controladores, simplificando o código e melhorando a manutenção.
+
+Com o `@ControllerAdvice`, você pode definir métodos anotados com `@ExceptionHandler` para lidar com exceções específicas ou globais lançadas por controladores. Esses métodos 
+são acionados quando a exceção correspondente é lançada e podem retornar uma resposta de erro apropriada, redirecionar para uma página de erro personalizada, registrar a exceção 
+ou executar qualquer outra lógica necessária.
+
+Além do tratamento de exceções, o `@ControllerAdvice` também oferece suporte a outros recursos, como a vinculação global de dados com `@ModelAttribute`, que permite adicionar 
+atributos a todos os modelos retornados por controladores. Isso é útil para adicionar informações comuns aos modelos, como informações do cabeçalho, informações do usuário, 
+entre outras.
+
+Outra funcionalidade do `@ControllerAdvice` é a capacidade de personalizar a resolução de visões, permitindo definir configurações específicas para a exibição de páginas de 
+erro ou para a renderização de visões em geral.
+
+Em resumo, a anotação `@ControllerAdvice` é usada para criar um componente global que fornece recursos de tratamento de exceções, vinculação de dados e outras configurações para 
+controladores. Ela centraliza a lógica comum e melhora a manutenção e a legibilidade do código.
+
+------------- // ----------------
+
+A anotação `@ExceptionHandler` é usada no Spring Framework para lidar com exceções lançadas por métodos em um controlador. Ela indica que o método anotado deve ser invocado 
+quando ocorrer uma exceção específica ou qualquer uma de suas subclasses.
+
+No exemplo dado `@ExceptionHandler({Exception.class, RuntimeException.class, Throwable.class})`, o método anotado será acionado quando ocorrer qualquer uma das exceções listadas: 
+`Exception`, `RuntimeException` ou `Throwable`. Essas são classes base para várias exceções que podem ocorrer em um aplicativo, cobrindo uma ampla gama de possíveis exceções.
+
+Ao usar essa anotação com uma lista de exceções, você está indicando que o método deve lidar com todas essas exceções de forma semelhante. Isso é útil quando você deseja ter um 
+tratamento genérico para várias exceções ou quando deseja capturar exceções de diferentes tipos em um único método.
+
+Dentro do método anotado com `@ExceptionHandler`, você pode implementar a lógica necessária para tratar a exceção, como retornar uma resposta de erro personalizada, redirecionar 
+para uma página de erro, registrar a exceção em um log, entre outras ações.
+
+É importante observar que o escopo do tratamento de exceções anotado com `@ExceptionHandler` é limitado ao controlador onde o método está definido. Se você quiser ter um 
+tratamento global para todas as exceções em seu aplicativo, você pode usar o `@ControllerAdvice` em conjunto com o `@ExceptionHandler` em uma classe separada.
+
+Em resumo, a anotação `@ExceptionHandler` é usada para indicar um método que deve ser invocado para lidar com exceções específicas ou suas subclasses. No exemplo dado, o método 
+será acionado quando ocorrer qualquer uma das exceções `Exception`, `RuntimeException` ou `Throwable`. Dentro do método, você pode implementar a lógica de tratamento adequada 
+para a exceção.
+
+------------- // ----------------
+
+O método handleExceptionInternal é um método de tratamento de exceção interno usado em uma classe que estende a classe ResponseEntityExceptionHandler no Spring Framework. Esse 
+método é responsável por lidar com exceções lançadas durante o processamento de uma solicitação e retornar uma resposta de erro apropriada.
+
+Vamos analisar o que cada parâmetro representa:
+
+ex: A exceção lançada durante o processamento da solicitação.
+body: O objeto que representa o corpo da resposta da exceção.
+headers: Os cabeçalhos HTTP da resposta.
+status: O status HTTP da resposta.
+request: O objeto WebRequest que representa a solicitação recebida.
+
+No corpo do método, é implementada a lógica para lidar com exceções específicas. No exemplo dado, o código trata a exceção MethodArgumentNotValidException, que ocorre quando há 
+erros de validação nos argumentos de um método.
+
+Dentro desse bloco condicional, a lista de erros é obtida usando o método getBindingResult().getAllErrors() e, em seguida, cada erro é percorrido para obter a mensagem de erro 
+padrão usando getDefaultMessage(). As mensagens de erro são concatenadas em uma única string msg.
+
+Se a exceção não for do tipo MethodArgumentNotValidException, a mensagem de erro é definida como a mensagem da própria exceção usando ex.getMessage().
+
+Em seguida, um objeto ObjetoErro é criado, que é uma classe personalizada contendo informações sobre o erro, como a mensagem de erro e o código de status. Esse objeto é usado 
+para encapsular os detalhes do erro.
+
+Finalmente, uma instância de ResponseEntity é retornada, que contém o objeto de erro, os cabeçalhos e o status HTTP apropriados para a resposta.
+
+Em resumo, o método handleExceptionInternal é responsável por lidar com exceções específicas e criar uma resposta de erro adequada. Ele extrai as informações relevantes da 
+exceção, como a mensagem de erro, e as encapsula em um objeto de erro para ser retornado como resposta.
+

@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import projeto.api.rest.model.Usuario;
+import projeto.api.rest.model.UsuarioDTO;
 import projeto.api.rest.repository.UsuarioRepository;
 
 /* Arquitetura RestFull */
@@ -53,6 +54,7 @@ public class IndexController {
 	 * usuário (usuarioRepository) e retorna uma resposta JSON contendo o usuário encontrado, com o status HTTP 200 (OK).
 	 * */
 	
+	/*
 	@GetMapping(value = "/{id}", produces = "application/json")
 	@CacheEvict(value = "cacheusuariosid", allEntries = true)
 	@CachePut("cacheusuariosid")
@@ -61,6 +63,18 @@ public class IndexController {
 		Optional<Usuario> usuario = usuarioRepository.findById(id);
 		System.out.println("Executando versão 1");
 		return new ResponseEntity<Usuario>(usuario.get(), HttpStatus.OK); 
+	}
+	*/
+	
+	// Exemplificando o UsuarioDTO
+	@GetMapping(value = "/{id}", produces = "application/json")
+	@CacheEvict(value = "cacheusuariosid", allEntries = true)
+	@CachePut("cacheusuariosid")
+	public ResponseEntity<UsuarioDTO> usuDTO(@PathVariable(value = "id") Long id) {
+
+		Optional<Usuario> usuario = usuarioRepository.findById(id);
+		System.out.println("Executando versão 1");
+		return new ResponseEntity<UsuarioDTO>(new UsuarioDTO(usuario.get()), HttpStatus.OK); 
 	}
 	
 	

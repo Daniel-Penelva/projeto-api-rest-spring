@@ -19,6 +19,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
 import javax.persistence.UniqueConstraint;
 
+import org.hibernate.validator.constraints.br.CPF;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -37,6 +38,9 @@ public class Usuario implements UserDetails {
 	private String login;
 	private String senha;
 	private String nome;
+	
+	@CPF(message = "Cpf inválido")
+	private String cpf;
 	
 	// Declarando a Lista de Telefones
 	// Na regra um usuario pode ter nenhum ou vários telefones - tem que mapear para o usuário
@@ -109,6 +113,14 @@ public class Usuario implements UserDetails {
 
 	public void setNome(String nome) {
 		this.nome = nome;
+	}
+	
+	public String getCpf() {
+		return cpf;
+	}
+	
+	public void setCpf(String cpf) {
+		this.cpf = cpf;
 	}
 
 	public List<Telefone> getTelefones() {

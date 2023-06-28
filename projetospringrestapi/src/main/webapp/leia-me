@@ -1709,3 +1709,24 @@ Finalmente, uma instância de ResponseEntity é retornada, que contém o objeto 
 Em resumo, o método handleExceptionInternal é responsável por lidar com exceções específicas e criar uma resposta de erro adequada. Ele extrai as informações relevantes da 
 exceção, como a mensagem de erro, e as encapsula em um objeto de erro para ser retornado como resposta.
 
+-------------------------------------------------------- // ------------------------------------------------------------------
+
+O padrão DTO (Data Transfer Object) é um padrão de projeto que visa transferir dados entre diferentes camadas ou componentes de um sistema. Ele é usado para encapsular e 
+transportar dados de forma estruturada e coesa, permitindo a transferência eficiente de informações entre diferentes partes de um sistema.
+
+O objetivo principal do padrão DTO é fornecer uma representação simples e independente de um objeto de domínio ou entidade. Em vez de expor todos os detalhes e propriedades de 
+um objeto de domínio, o DTO fornece apenas os dados relevantes que precisam ser transferidos para um determinado contexto ou operação, ou seja, por exemplo, quando desejar 
+trafegar dados é primordial esconder alguns atributos da classe principal, retornando apenas atributos que você deseja que o usuário veja.
+
+Os DTOs são frequentemente utilizados em cenários onde há a necessidade de transferir dados entre a camada de apresentação (interface do usuário) e a camada de serviço ou 
+persistência de dados. Eles ajudam a evitar a exposição direta de objetos de domínio complexos para a camada de apresentação, fornecendo uma visão simplificada e personalizada 
+dos dados.
+
+Além disso, o padrão DTO também pode ser usado para melhorar o desempenho e reduzir o tráfego de rede, uma vez que os DTOs podem ser otimizados para transportar apenas os dados 
+necessários, evitando a transferência de informações desnecessárias.
+
+Ao usar o padrão DTO, é comum criar classes específicas para representar os objetos DTO, contendo apenas os campos e métodos necessários para a transferência de dados. Essas 
+classes são estruturadas de acordo com as necessidades do contexto em que são utilizadas.
+
+Em resumo, o padrão DTO é uma abordagem para transferir dados entre diferentes partes de um sistema de forma estruturada e eficiente. Ele permite a criação de objetos de 
+transferência de dados simplificados e personalizados, melhorando a organização, o desempenho e a segurança da comunicação entre as diferentes camadas de um sistema.

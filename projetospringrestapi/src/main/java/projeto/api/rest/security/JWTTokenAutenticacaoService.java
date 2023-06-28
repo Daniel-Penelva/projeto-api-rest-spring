@@ -73,6 +73,8 @@ public class JWTTokenAutenticacaoService {
 		/* Pega o token enviado no cabeçalho HTTP */
 		String token = request.getHeader(HEADER_STRING);
 		
+	try {
+			
 		if(token != null) {
 			
 			String tokenLimpo = token.replace(TOKEN_PREFIX, "").trim();
@@ -116,6 +118,15 @@ public class JWTTokenAutenticacaoService {
 				} // if 2
 			
 		} // if 1
+		
+	   } catch (io.jsonwebtoken.ExpiredJwtException e) {
+			try {
+				response.getOutputStream().println("Seu token está expirado! Faça o login ou informe um novo token para autenticação");
+				
+			} catch (IOException e1) {
+				
+			}
+	   }
 		
 		liberacaoCors(response);
 		

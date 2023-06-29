@@ -1,7 +1,15 @@
 package projeto.api.rest.controller;
 
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.List;
 import java.util.Optional;
+
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
@@ -18,6 +26,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.google.gson.Gson;
 
 import projeto.api.rest.model.Usuario;
 import projeto.api.rest.model.UsuarioDTO;
@@ -151,14 +161,41 @@ public class IndexController {
 	 *    2. Criptografa a senha do usuário usando o algoritmo bcrypt.
 	 *    3. Salva o usuário no banco de dados.
 	 *    4. Retorna uma resposta HTTP com o usuário salvo e o status HTTP 200 (OK) indicando que o cadastro foi bem-sucedido.
+	 * @throws MalformedURLException 
 	 * */ 
 	@PostMapping(value = "/", produces = "application/json")
-	public ResponseEntity<Usuario> cadastrar(@RequestBody Usuario usuario) {
+	public ResponseEntity<Usuario> cadastrar(@RequestBody @Valid Usuario usuario) throws Exception {
 
 		// Criando a referência do telefone com o usuário - vai amarrar os telefones a esse usuário
 		for (int pos = 0; pos < usuario.getTelefones().size(); pos++) {
 			usuario.getTelefones().get(pos).setUsuario(usuario);
 		}
+		
+		// Consumindo API publica externa
+		URL url = new URL("https://viacep.com.br/ws/" + usuario.getCep() + "/json/");
+		URLConnection connection = url.openConnection();
+		InputStream is = connection.getInputStream();
+		BufferedReader br = new BufferedReader(new InputStreamReader(is, "UTF-8"));
+		
+		String cep = "";
+		StringBuilder jsonCep = new StringBuilder();
+		
+		while((cep = br.readLine()) != null) {
+			jsonCep.append(cep);
+		}
+		
+		//System.out.println(jsonCep.toString());
+		
+		Usuario userAux = new Gson().fromJson(jsonCep.toString(), Usuario.class);
+		
+		usuario.setCep(userAux.getCep());
+		usuario.setLogradouro(userAux.getLogradouro());
+		usuario.setComplemento(userAux.getComplemento());
+		usuario.setBairro(userAux.getBairro());
+		usuario.setLocalidade(userAux.getLocalidade());
+		usuario.setUf(userAux.getUf());
+		
+		// Consumindo API publica externa
 
 		String senhaCriptografado = new BCryptPasswordEncoder().encode(usuario.getSenha());
 		usuario.setSenha(senhaCriptografado);

@@ -42,6 +42,13 @@ public class Usuario implements UserDetails {
 	@CPF(message = "Cpf inválido")
 	private String cpf;
 	
+	private String cep;
+	private String logradouro;
+	private String complemento;
+	private String bairro;
+	private String localidade;
+	private String uf;
+	
 	// Declarando a Lista de Telefones
 	// Na regra um usuario pode ter nenhum ou vários telefones - tem que mapear para o usuário
 	// 'orphanRemoval = true' e 'cascade' -> para remover o usuário e pode ser em cascata
@@ -123,6 +130,54 @@ public class Usuario implements UserDetails {
 		this.cpf = cpf;
 	}
 
+	public String getCep() {
+		return cep;
+	}
+
+	public void setCep(String cep) {
+		this.cep = cep;
+	}
+
+	public String getLogradouro() {
+		return logradouro;
+	}
+
+	public void setLogradouro(String logradouro) {
+		this.logradouro = logradouro;
+	}
+
+	public String getComplemento() {
+		return complemento;
+	}
+
+	public void setComplemento(String complemento) {
+		this.complemento = complemento;
+	}
+
+	public String getBairro() {
+		return bairro;
+	}
+
+	public void setBairro(String bairro) {
+		this.bairro = bairro;
+	}
+
+	public String getLocalidade() {
+		return localidade;
+	}
+
+	public void setLocalidade(String localidade) {
+		this.localidade = localidade;
+	}
+
+	public String getUf() {
+		return uf;
+	}
+
+	public void setUf(String uf) {
+		this.uf = uf;
+	}
+
 	public List<Telefone> getTelefones() {
 		return telefones;
 	}
@@ -158,7 +213,6 @@ public class Usuario implements UserDetails {
 		return Objects.equals(id, other.id);
 	}
 
-	
 	// Retorna uma coleção de objetos `GrantedAuthority`, que representam as autorizações ou papéis do usuário.
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {

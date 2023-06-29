@@ -1730,3 +1730,52 @@ classes são estruturadas de acordo com as necessidades do contexto em que são 
 
 Em resumo, o padrão DTO é uma abordagem para transferir dados entre diferentes partes de um sistema de forma estruturada e eficiente. Ele permite a criação de objetos de 
 transferência de dados simplificados e personalizados, melhorando a organização, o desempenho e a segurança da comunicação entre as diferentes camadas de um sistema.
+
+
+-------------------------------------------------------- // ------------------------------------------------------------------
+
+Consumindo API Externa do Via Cep
+Site: https://viacep.com.br/
+Site (Json): https://viacep.com.br/ws/01001000/json/
+
+
+Esse script consome uma API externa pública para obter informações do endereço com base no CEP fornecido. Vamos analisar o código passo a passo:
+
+1. `URL url = new URL("https://viacep.com.br/ws/" + usuario.getCep() + "/json/");`: Cria uma instância da classe `URL` com a URL da API do ViaCEP, concatenando o CEP fornecido à URL.
+
+2. `URLConnection connection = url.openConnection();`: Abre uma conexão com a URL especificada.
+
+3. `InputStream is = connection.getInputStream();`: Obtém um fluxo de entrada (`InputStream`) que permite ler os dados da resposta da conexão.
+
+4. `BufferedReader br = new BufferedReader(new InputStreamReader(is, "UTF-8"));`: Cria um leitor de caracteres (`BufferedReader`) para ler os dados do fluxo de entrada. 
+                                                                                  Esse leitor usa o encoding "UTF-8" para decodificar os caracteres lidos.
+
+5. `String cep = "";`: Cria uma variável `cep` vazia para armazenar cada linha lida do BufferedReader.
+
+6. `StringBuilder jsonCep = new StringBuilder();`: Cria uma instância de `StringBuilder` para armazenar o conteúdo completo da resposta JSON.
+
+7. `while((cep = br.readLine()) != null) {`: Inicia um loop enquanto houver linhas a serem lidas do BufferedReader.
+
+8. `jsonCep.append(cep);`: Adiciona a linha lida ao `StringBuilder` `jsonCep`.
+
+9. `Usuario userAux = new Gson().fromJson(jsonCep.toString(), Usuario.class);`: Utiliza a biblioteca Gson para converter o conteúdo completo da resposta JSON, armazenado no 
+                                                                                `StringBuilder`, em um objeto da classe `Usuario`.
+
+10. `usuario.setCep(userAux.getCep());`: Atribui ao objeto `usuario` as informações de endereço obtidas a partir do objeto `userAux`.
+
+11. `usuario.setLogradouro(userAux.getLogradouro());`: Atribui ao objeto `usuario` o logradouro obtido do objeto `userAux`.
+
+12. `usuario.setComplemento(userAux.getComplemento());`: Atribui ao objeto `usuario` o complemento obtido do objeto `userAux`.
+
+13. `usuario.setBairro(userAux.getBairro());`: Atribui ao objeto `usuario` o bairro obtido do objeto `userAux`.
+
+14. `usuario.setLocalidade(userAux.getLocalidade());`: Atribui ao objeto `usuario` a localidade obtida do objeto `userAux`.
+
+15. `usuario.setUf(userAux.getUf());`: Atribui ao objeto `usuario` o estado (UF) obtido do objeto `userAux`.
+
+Esse script consome a API do ViaCEP, obtém os dados de endereço correspondentes ao CEP fornecido e os atribui ao objeto `usuario`. Dessa forma, é possível preencher 
+automaticamente as informações de endereço com base no CEP fornecido pelo usuário.
+
+Em resumo, esse script utiliza a URL do ViaCEP com o CEP fornecido para fazer uma requisição HTTP, ler a resposta da requisição linha por linha e armazenar o conteúdo completo 
+em um `StringBuilder`. Por fim, imprime o conteúdo completo da resposta JSON no console. Essas informações podem ser utilizadas para obter dados como endereço, cidade, estado, 
+etc., com base no CEP fornecido.

@@ -58,6 +58,9 @@ public class JWTTokenAutenticacaoService {
 		/* Adiciona o token no cabeçalho HTTP - Por exemplo: (Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9) */
 		response.addHeader(HEADER_STRING, token);
 		
+		// Código implementado para o projeto do Angular 8 - libera a resposta para um servidor diferente do projeto angular: localhost:4200
+		response.addHeader("Access-Control-Allow-Origin", "*");
+		
 		
 		ApplicationContextLoad.getApplicationContextLoad()
 		.getBean(UsuarioRepository.class).atualizarTokenUser(JWT, username);
@@ -134,6 +137,9 @@ public class JWTTokenAutenticacaoService {
 	   }
 		
 		liberacaoCors(response);
+		
+		// Código implementado para o projeto do Angular 8 - libera a resposta para um servidor diferente do projeto angular: localhost:4200
+			response.addHeader("Access-Control-Allow-Origin", "*");
 		
 		// Usuário não autorizado
 			return null;

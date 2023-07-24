@@ -153,6 +153,11 @@ public class JWTTokenAutenticacaoService {
 		if(response.getHeader("Access-Control-Request-Headers") == null) {
 			response.addHeader("Access-Control-Request-Headers", "*");
 		}
+		
+		// Liberando Cors para deletar o usuario
+		if(response.getHeader("Access-Control-Allow-Methods") == null) {
+			response.addHeader("Access-Control-Allow-Methods", "*");
+		}
 	}
 
 }

@@ -342,5 +342,50 @@ public class IndexController {
 		usuarioRepository.deleteById(id);
 		return new ResponseEntity("Usuário Deletado!", HttpStatus.OK); 
 	}
+	
+	
+	
+	/**
+	 * Vamos analisar as anotações e o código abaixo em partes:
+	 * 
+	 * 1. `@GetMapping(value = "/usuarioPorNome/{nome}", produces = "application/json")`: Essa anotação é usada para mapear a rota 
+	 * "/usuarioPorNome/{nome}" para esse método. Quando uma solicitação HTTP GET é feita para essa rota com um nome específico na URL, 
+	 * o método `usuarioPorNome` será acionado.
+	 * 
+	 * 2. `@CacheEvict(value = "cacheusuarios", allEntries = true)`: Essa anotação é usada para limpar o cache chamado "cacheusuarios" 
+	 * antes de executar esse método. A configuração `allEntries = true` indica que todas as entradas do cache "cacheusuarios" serão 
+	 * removidas antes de executar o método. Isso é útil para garantir que os dados sejam atualizados no cache após a chamada desse método.
+	 * 
+	 * 3. `@CachePut("cacheusuarios")`: Essa anotação é usada para armazenar o resultado do método no cache "cacheusuarios" após a 
+	 * execução bem-sucedida do método. Isso permite que os dados sejam armazenados em cache para futuras chamadas com o mesmo parâmetro 
+	 * "nome".
+	 * 
+	 * 4. `public ResponseEntity<List<Usuario>> usuarioPorNome(@PathVariable("nome") String nome) { ... }`: Essa é a definição do método 
+	 * `usuarioPorNome`, que é acionado quando a rota "/usuarioPorNome/{nome}" é acessada. O parâmetro `@PathVariable("nome") String 
+	 * nome` indica que o valor do nome fornecido na URL será passado para esse método.
+	 * 
+	 * 5. `List<Usuario> listUsu = (List<Usuario>) usuarioRepository.findUserByNome(nome);`: Nesse trecho de código, estamos usando o 
+	 * `usuarioRepository` para buscar usuários pelo nome no banco de dados. Acredita-se que o método `findUserByNome(nome)` seja 
+	 * definido na interface `usuarioRepository`, que é uma interface que estende o Spring Data JPA e possui métodos 
+	 * personalizados de consulta.
+	 * 
+	 * 6. `return new ResponseEntity<List<Usuario>>(listUsu, HttpStatus.OK);`: O resultado da consulta é encapsulado em um objeto 
+	 * `ResponseEntity`, que é retornado como resposta da requisição HTTP GET. Ele contém a lista de usuários correspondentes ao nome 
+	 * fornecido e o status "OK" (HTTP 200).
+	 * 
+	 * Em resumo, esse script define um controlador que recebe um nome na URL e usa o `usuarioRepository` para buscar usuários 
+	 * correspondentes a esse nome no banco de dados. A resposta contém a lista de usuários encontrados e é armazenada no cache 
+	 * "cacheusuarios" para futuras consultas com o mesmo nome. O cache é limpo antes de cada execução para garantir que os dados 
+	 * estejam atualizados.
+	 * */
+	
+	@GetMapping(value = "/usuarioPorNome/{nome}", produces = "application/json")
+	@CacheEvict(value = "cacheusuarios", allEntries = true)
+	@CachePut("cacheusuarios")
+	public ResponseEntity<List<Usuario>> usuarioPorNome(@PathVariable("nome") String nome) {
+
+		List<Usuario> listUsu = (List<Usuario>) usuarioRepository.findUserByNome(nome);
+		return new ResponseEntity<List<Usuario>>(listUsu, HttpStatus.OK); 
+	}
 
 }
